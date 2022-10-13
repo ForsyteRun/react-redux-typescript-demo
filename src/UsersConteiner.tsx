@@ -5,10 +5,8 @@ import { AppState } from "./redux/redux";
 import { downReselect } from "./redux/selectors";
 import {
   getFollowThunkCreater,
-  getPageChangeThunkCreater,
-  getUsersThunkCreater,
-  getUnFollowThunkCreater
-} from "./redux/statusReduser";
+  getPageChangeThunkCreater, getUnFollowThunkCreater, getUsersThunkCreater
+} from "./redux/usersReduser";
 import Status from "./Status";
 import { UserData } from "./types/types";
 
@@ -29,9 +27,9 @@ type MapDispatchToProps = {
   getPageChangeThunkCreater: (pageSize: number, page: number) => void;
 };
 
-class StatusAPI extends Component<MapStateToProps & MapDispatchToProps> {
+class UsersConteiner extends Component<MapStateToProps & MapDispatchToProps> {
   componentDidMount() {
-    this.props.getUsersThunkCreater(
+      this.props.getUsersThunkCreater(
       this.props.pageSize,
       this.props.currentPageData
     );
@@ -45,7 +43,8 @@ class StatusAPI extends Component<MapStateToProps & MapDispatchToProps> {
     return (
       <div>
         {this.props.isLoading ? <Preloader /> : null}
-        <Status {...this.props} onPageChange={this.onPageChange} />
+        {/* <NewsConteiner {...this.props} /> */}
+        <Status {...this.props} onPageChange={this.onPageChange}/>
       </div>
     );
   }
@@ -54,16 +53,16 @@ class StatusAPI extends Component<MapStateToProps & MapDispatchToProps> {
 let mapStateToProps = (state: AppState): MapStateToProps => {
   return {
     dataUsers: downReselect(state),
-    pageSize: state.status.pageSize,
-    totalUserCount: state.status.totalUserCount,
-    currentPageData: state.status.currentPage,
-    isLoading: state.status.isLoading,
-    isFollowingData: state.status.followingProgress,
-    amountPagi: state.status.amountPagi,
+    pageSize: state.users.pageSize,
+    totalUserCount: state.users.totalUserCount,
+    currentPageData: state.users.currentPage,
+    isLoading: state.users.isLoading,
+    isFollowingData: state.users.followingProgress,
+    amountPagi: state.users.amountPagi,
   };
 };
 
 export default connect<MapStateToProps, MapDispatchToProps, {}, AppState>(
   mapStateToProps,
   { getFollowThunkCreater, getUnFollowThunkCreater, getPageChangeThunkCreater, getUsersThunkCreater }
-)(StatusAPI);
+)(UsersConteiner);

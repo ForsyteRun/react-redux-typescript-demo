@@ -17,7 +17,7 @@ const initialState = {
 type InitialState = typeof initialState;
 type Actions = ReturnType<ActionType<typeof actions>>
 
-const profileReduser = (state: InitialState = initialState, action: Actions):InitialState => {
+export const profileReduser = (state: InitialState = initialState, action: Actions):InitialState => {
    switch (action.type) {
       case 'typescript/SET_USERS':
          return {

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Pagination, { PaginationType } from "./common/Pagination";
 import { UserData } from "./types/types";
-import User from "./User";
+import FollowUnFollow from "./FollowUnFollow";
 
 type UserType = {
   isFollowingData: Array<number>
@@ -10,14 +10,14 @@ type UserType = {
 
 type PropsType = {
   dataUsers: Array<UserData>
-}
+};
 
 const Status: FC<UserType&PropsType&PaginationType> = (props) => {
 
   return (
     <div>
-      {/* <NewsConteiner {...props} /> */}
-      {props.dataUsers.map((el: UserData) => <User {...props} el = {el} key={el.id}/>)}
+    
+      {props.dataUsers.map((el: UserData) => <FollowUnFollow {...props} el = {el} key={el.id}/>)}
       <Pagination {...props}/> 
     </div>
 )}

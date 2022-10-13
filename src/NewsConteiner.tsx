@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import News from "./News";
 import NewsHooks from "./NewsHooks";
 import { AppState } from "./redux/redux";
-import { getNewsThunkCreater, updateNewsThunkCreater } from './redux/statusReduser';
+import { getNewsThunkCreater, updateNewsThunkCreater } from './redux/usersReduser';
 
 type MSTPType = {
    status: string
@@ -32,7 +32,7 @@ class NewsConteiner extends Component<MSTPType&MapDSTPType>{
 
 const mapStateToProps = (state: AppState): MSTPType => {
    return {
-      status: state.status.status,
+      status: state.users.status
    }
 };
 

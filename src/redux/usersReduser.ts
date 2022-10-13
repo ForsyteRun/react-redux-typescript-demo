@@ -1,5 +1,5 @@
 
-import { ActionType } from './../types/types';
+import { ActionType } from '../types/types';
 import { Dispatch } from "redux";
 import { followUnFollowHelper } from "../common/helperReduser";
 import { UserData } from '../types/types';
@@ -21,7 +21,7 @@ type InitialState = typeof initialState;
 type Actions = ReturnType<ActionType<typeof actions>>
 
 //reduser - logic of statusPage
-const statusReduser = (
+export const usersReduser = (
   state: InitialState = initialState,
   action: Actions
 ): InitialState => {
@@ -78,7 +78,7 @@ const statusReduser = (
   }
 };
 
-export default statusReduser;
+export default usersReduser;
 
 //action-creaters
 export const actions = {

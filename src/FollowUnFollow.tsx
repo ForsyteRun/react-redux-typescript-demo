@@ -10,7 +10,7 @@ export type OwnType = {
   getFollowThunkCreater: (followingProgress: boolean, userId: number) => void
 }
 
-const User: FC<OwnType> = (props) => {
+const FollowUnFollow: FC<OwnType> = (props) => {
 
   return ( 
         <div className = {style.content}>
@@ -36,4 +36,4 @@ const User: FC<OwnType> = (props) => {
         ) 
       }
 
-export default User;
+export default FollowUnFollow;

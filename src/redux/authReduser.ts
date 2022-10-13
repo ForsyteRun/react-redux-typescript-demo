@@ -18,7 +18,7 @@ const initialState = {
 export type InitialState = typeof initialState;
 type Actions = ReturnType<ActionType<typeof actions>>;
 
-const authReduser = (state: InitialState = initialState, action: Actions): InitialState => {
+export const authReduser = (state: InitialState = initialState, action: Actions): InitialState => {
    switch (action.type) {
       case 'minin/authReduser/SET_AUTH':
          return {

@@ -50,7 +50,7 @@ const mapStateToProps = (state: AppState): MSTPType => {
   return{
     isAuth: state.auth.isAuth,
     imageProfile: state.myProfile.profileInfo.image,
-    isLoading: state.status.isLoading,
+    isLoading: state.users.isLoading,
     profileData: state.profile.profileInfo,
     editLogoForm: state.myProfile.editLogoForm
   }

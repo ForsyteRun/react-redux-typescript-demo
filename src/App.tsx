@@ -2,7 +2,7 @@ import { FC, lazy, Suspense, useState } from 'react';
 import styles from './App.module.css';
 import { connect } from 'react-redux';
 import { NavLink, Route, Routes } from 'react-router-dom';
-import StatusAPI from './StatusAPI';
+import UsersConteiner from './UsersConteiner';
 import ProfileConteiner from './ProfileConteiner';
 import HeaderConteiner from './HeaderConteiner';
 import Dashboard from './Dashboard';
@@ -48,13 +48,13 @@ const App: FC<AppType> = (props) => {
         <button onClick={increment}>+</button>
         <button onClick={dicrement}>-</button>
         <div>Результат:{num}</div>
-        <NavLink to='/status' style={{ margin: '20px' }}>Status</NavLink>
+        <NavLink to='/users' style={{ margin: '20px' }}>Users</NavLink>
         <NavLink to='/register' style={{ margin: '20px' }}>Music</NavLink>
         <NavLink to='/music' style={{ margin: '20px' }}>Login</NavLink>
         <NavLink to='/myprofile'>My Profile</NavLink>
         <Routes>
-          <Route path='/' element={<StatusAPI />} />
-          <Route path='/status' element={<StatusAPI />} />
+          <Route path='/' element={<UsersConteiner />} />
+          <Route path='/users' element={<UsersConteiner />} />
           <Route path='/profile/:id' element={<ProfileConteiner />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/preferenses' element={<Preferenses />} />

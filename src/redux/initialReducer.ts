@@ -9,7 +9,7 @@ const initialState = {
 export type InitialState = typeof initialState;
 type Actions = ReturnType<ActionType<typeof actions>>
 
-const initialReducer = (
+export const initialReducer = (
   state: InitialState = initialState,
   action: Actions
 ): InitialState => {

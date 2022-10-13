@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import { getUsersThunkCreater } from './redux/statusReduser';
+import { getUsersThunkCreater } from './redux/usersReduser';
 import { AppState } from "./redux/redux";
 import { compose } from "redux";
 
@@ -33,7 +33,7 @@ class ProfileConteiner extends Component<MSTPT&MapDTP>{
 
 let mapStateToProps = (state: AppState): MSTPT => {
   return{
-    userProfile: state.status.isLoading
+    userProfile: state.users.isLoading
   }
 }
  
