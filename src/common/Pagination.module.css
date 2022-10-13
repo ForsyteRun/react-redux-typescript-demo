@@ -1,0 +1,24 @@
+img{
+  width: 20px;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 80%;
+  height: 100%;
+  padding: 15px;
+  border: 1px solid #000;
+  background-color: #999;
+  margin: 0 auto;
+}
+
+.selected {
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.pagi span, button{
+  cursor: pointer;
+}

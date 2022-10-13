@@ -1,0 +1,20 @@
+.conteiner {
+   text-align: left;
+   padding: 5px 10px;
+   font-size: 12px;
+   font-weight: bold;
+}
+
+.conteiner:first-child {
+   padding: 0 10px;
+}
+
+.inputForm{
+   margin: 5px;
+   border-color: rgba(17, 17, 17, 0.042);
+}
+
+.text{
+   font-weight: normal;
+   margin-left: 10px;
+}

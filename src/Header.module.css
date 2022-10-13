@@ -1,0 +1,10 @@
+.conteiner {
+   background-color: rgba(153, 153, 153, 0.094);
+   padding: 10px;
+}
+
+.login {
+   display: block;
+   text-align: right;
+   margin: 0 auto;
+}

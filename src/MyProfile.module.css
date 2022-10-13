@@ -1,0 +1,39 @@
+.conteiner {
+   position: relative;
+   display: flex;
+   max-width: 100%;
+   justify-content: center;
+   align-items: start;
+   margin: 20px 0;
+}
+
+.rightBlock{
+   flex-shrink: 0;
+}
+
+.button {
+   position: relative;
+   top: 80%;
+   left: 56%;
+   opacity: 20%;
+   border: none;
+   background-color: transparent;
+   font-size: 11px;
+}
+
+.logoConteiner {
+   position: relative; 
+   width: 200px;
+}
+
+.editLogo {
+   position: absolute;
+   right: 0;
+   top: 0;
+}
+
+.title{
+   text-align: left;
+   font-weight: bold;
+   margin: 5px;
+}
