@@ -1,15 +1,15 @@
 {
   "Post": {
-    "cover": {
+    "photo": {
       "regexp": "https://picsum\\.photos/seed/[0-9]{5}/1920/270"
     },
-    "title": {
+    "name": {
       "loremWords": {
         "minLength": 5,
         "maxLength": 20
       }
     },
-    "body": {
+    "status": {
       "loremParagraphs": {
         "minLength": 10,
         "maxLength": 100
@@ -22,7 +22,7 @@
         "three"
       ]
     },
-    "isDraft": {
+    "isFollow": {
       "boolean": {}
     },
     "createdAt": {
