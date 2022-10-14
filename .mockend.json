@@ -1,14 +1,10 @@
 {
-  "Post": {
-    "title": { "string": {} },
-    "comments": {
-      "hasMany": "Comment"
-    }
-  },
-  "Comment": {
-    "body": { "string": {} },
-    "post": {
-      "belongsTo": "Post"
-    }
-  }
+  "Post":  {
+  "name": "Rey",
+  "uniqueUrlName": "Moen",
+  "photos": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/956.jpg",
+  "status": "Try to compress the XML bus, maybe it will calculate the open-source capacitor!",
+  "followed": false,
+  "id": "1"
+ },
 }
