@@ -9,8 +9,9 @@ import { meAPI } from '../api/meApi';
 const initialState = {
   users: [] as Array<UserData>,
   pageSize: 3 as number,
-  totalUserCount: 50 as number,
-  currentPage: 0 as number,
+  offset: 0 as number,
+  totalUserCount: 10 as number,
+  currentPage: 1 as number,
   amountPagi: 5 as number,
   isLoading: false,
   followingProgress: [] as Array<number>,
@@ -39,7 +40,7 @@ export const usersReduser = (
     case 'minin/statusReduser/SETUSERS':
       return {
         ...state,
-        users: [...state.users, ...action.users],
+        users: action.users
       };
     case 'minin/statusReduser/CURRENT_PAGE':
       return {
@@ -99,11 +100,11 @@ type DispatchType = Dispatch<Actions>;
 type StateType = () => InitialState;
 
 export const getUsersThunkCreater =
-  (pageSize: number, currentPage: number) =>
+  (pageSize: number, offset: number) =>
   async (dispatch: DispatchType, getState: StateType) => {
     try {
       dispatch(actions.toggleLoading(false));
-      const users = await usersApi.getUsers(pageSize, currentPage);
+      const users = await usersApi.getUsers(pageSize, offset);
      dispatch(actions.setUsers(users));
      // dispatch(actions.totalPages(res.data.headers));
       dispatch(actions.toggleLoading(false));
@@ -113,12 +114,12 @@ export const getUsersThunkCreater =
   };
 
 export const getPageChangeThunkCreater =
-  (pageSize: number, page: number) =>
+  (pageSize: number, pageNumber: number, offset: number) =>
   async (dispatch: DispatchType, getState: StateType) => {
     try {
-      dispatch(actions.currentPage(page));
+      dispatch(actions.currentPage(pageNumber));
       dispatch(actions.toggleLoading(true));
-      let res = await usersApi.getUsers(pageSize, page);
+      let res = await usersApi.getUsers(pageSize, offset);
       dispatch(actions.setUsers(res));
       dispatch(actions.toggleLoading(false)); 
     } catch (error) {

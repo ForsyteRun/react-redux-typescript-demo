@@ -17,22 +17,31 @@ type MapStateToProps = {
   users: Array<UserData>;
   isLoading: boolean;
   amountPagi: number;
+  offset: number
 };
 
 type MapDispatchToProps = {
   getFollowThunkCreater: (followingProgress: boolean, userId: number) => void;
   getUnFollowThunkCreater: (followingProgress: boolean, userId: number) => void
-  getUsersThunkCreater: (pageSize: number, currentPage: number) => void;
-  getPageChangeThunkCreater: (pageSize: number, page: number) => void;
+  getUsersThunkCreater: (pageSize: number, offset: number) => void;
+  getPageChangeThunkCreater: (pageSize: number, page: number, offset: number) => void;
 };
 
 class UsersConteiner extends Component<MapStateToProps & MapDispatchToProps> {
   componentDidMount() {
-      this.props.getUsersThunkCreater(this.props.pageSize, this.props.currentPageData)
+      this.props.getUsersThunkCreater(this.props.pageSize, this.props.currentPageData-1)
   };
 
-  onPageChange = (el: number) => {
-    this.props.getPageChangeThunkCreater(this.props.pageSize, el);
+  onPageChange = (offset: number) => {
+    console.log(offset);
+    
+    if(offset >2) {
+      this.props.getPageChangeThunkCreater(this.props.pageSize, offset, offset + this.props.pageSize);
+    }else if (offset === 1){
+      this.props.getPageChangeThunkCreater(this.props.pageSize, offset, offset -1);
+    }else {
+      this.props.getPageChangeThunkCreater(this.props.pageSize, offset, (offset + this.props.pageSize) - 2);
+    }
   };
 
   render() {
@@ -55,6 +64,7 @@ let mapStateToProps = (state: AppState): MapStateToProps => {
     isLoading: state.users.isLoading,
     isFollowingData: state.users.followingProgress,
     amountPagi: state.users.amountPagi,
+    offset: state.users.offset
   };
 };
 

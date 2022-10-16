@@ -17,7 +17,7 @@ const Users: FC<UserType&PropsType&PaginationType> = (props) => {
   return (
     <div>
       {props.users.map((el: UserData) => <FollowUnFollow {...props} el = {el} key={el.id}/>)}
-      {/* <Pagination {...props}/>  */}
+      <Pagination {...props}/> 
     </div>
 )}
 

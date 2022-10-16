@@ -11,10 +11,10 @@ type Follow = {
 };
 
 export const usersApi = {
-  getUsers: async (pageSize: number = 3, currentPage: number = 0) => {
+  getUsers: async (pageSize: number = 3, offset: number) => {
     try {
       const res = await instanceMock.get<GetUsersApi>(
-        `post?limit=${pageSize}&offset=${currentPage}`
+        `post?limit=${pageSize}&offset=${offset}`
       );
       return res.data;
     } catch (error: any) {

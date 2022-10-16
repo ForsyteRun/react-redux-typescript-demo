@@ -10,36 +10,36 @@ export type PaginationType = {
 };
 
 const Pagination: FC<PaginationType> = (props) => {
-
-  let maxPageCount = Math.ceil(props.totalUserCount / props.pageSize);
+  const{amountPagi, totalUserCount, pageSize, currentPageData, onPageChange} = props;
+  
+  let maxPageCount = Math.ceil(totalUserCount / pageSize);
   let pages: Array<number> = [];
 
   for (let i = 1; i <= maxPageCount; i++) {
     pages.push(i);
   }
 
-  let portionSize = Math.ceil(props.totalUserCount / props.amountPagi);
+  let portionSize = Math.ceil(totalUserCount / amountPagi);
   const [portion, setPortion] = useState(1);
-  let leftBackPagi = (portion - 1) * props.amountPagi + 1;
-  let rightBackPagi = portion * props.amountPagi;
+  let leftBackPagi = (portion - 1) * amountPagi + 1;
+  let rightBackPagi = portion * amountPagi;
 
   return (
     <div className={style.pagi}>
       {(leftBackPagi > 1) &&
         <button onClick={() => {setPortion(portion - 1)}}
-        style={{margin: '0 10px', fontStyle: 'italic', backgroundColor:'transparent', border: '1px solid #999', borderRadius: '15%'}}
+        className={style.button}
         >PREV</button>}
       
       {pages
       .filter((el) => el >= leftBackPagi && el <= rightBackPagi)
-      //@ts-ignore
-      .map(el => <span className={props.currentPageData === el && style.selected}
-            onClick={() => props.onPageChange(el)}>{el}</span>
+      .map(el => <span className={currentPageData === el ? style.selected : style.noSelected} style={{cursor: 'pointer'}}
+            onClick={() => onPageChange(el)}>{el}</span>
         )}
 
       {leftBackPagi < portionSize && 
         <button onClick={() => {setPortion(portion + 1)}} 
-        style={{margin: '0 10px', fontStyle: 'italic', backgroundColor:'transparent', border: '1px solid #999', borderRadius: '15%'}}
+        className={style.button}
         >NEXT</button>}
     </div>
   )
