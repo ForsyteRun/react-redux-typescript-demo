@@ -1,15 +1,9 @@
 import axios from "axios";
 import { UserData } from "../types/types";
-import { instance } from "./api";
+import { instanceMock } from "./api";
 
-type GetUsersApi = {
-   data: {
-     users: Array<UserData>;
-   };
-   headers: {
-     "x-total-count": number;
-   };
- };
+type GetUsersApi =  Array<UserData>;
+  
 
 type Follow = {
   id: number;
@@ -17,19 +11,19 @@ type Follow = {
 };
 
 export const usersApi = {
-  getUsers: async (pageSize: number = 10, currentPage: number = 1) => {
+  getUsers: async (pageSize: number = 3, currentPage: number = 0) => {
     try {
-      const res = await instance.get<GetUsersApi>(
-        `photos?_limit=${pageSize}&_page=${currentPage}`
+      const res = await instanceMock.get<GetUsersApi>(
+        `post?limit=${pageSize}&offset=${currentPage}`
       );
-      return res;
+      return res.data;
     } catch (error: any) {
       throw new Error(`Error in getUsersApi: ${error.message}`);
     }
   }, 
   getUserProfile: async (id: number) => {
     try {
-      const res = await axios.get<UserData>(instance + "users/" + id);
+      const res = await axios.get<UserData>(instanceMock + "users/" + id);
       return res.data;
     } catch (error) {
       throw new Error(`Error in getUserProfile: ${error}`);
@@ -37,7 +31,7 @@ export const usersApi = {
   },
   setFollow: async (id: number) => {
     try {
-      const res = await instance.put<Follow>(`users/${id}`, {
+      const res = await instanceMock.put<Follow>(`users/${id}`, {
         isFollow: true,
       });
       return res.data;
@@ -47,7 +41,7 @@ export const usersApi = {
   },
   setUnFollow: async (id: number) => {
     try {
-      const res = await instance.put<Follow>(`users/${id}`, {
+      const res = await instanceMock.put<Follow>(`users/${id}`, {
         isFollow: false,
       });
       return res.data;

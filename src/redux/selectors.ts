@@ -1,5 +1,3 @@
-import { createSelector } from "reselect";
-import { UserData } from "../types/types";
 import {AppState} from './redux';
 
 export const getLogin = (state: AppState) => {
@@ -14,12 +12,7 @@ export const getEmail = (state: AppState) => {
    return state.auth.email;
 };
 
-const downUsers = (state: AppState) => {
+export const getUsers = (state: AppState) => {
    return state.profile.users;
 };
-
-export const downReselect = createSelector(downUsers, (users: Array<UserData>): Array<UserData> => {
-  return users.filter(el => el.id >= 2);
-});
-
 

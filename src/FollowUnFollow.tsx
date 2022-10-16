@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
-import style from './Status.module.css';
+import style from './Users.module.css';
 import avatar from './../src/img/smile.jpg';
 import { UserData } from "./types/types";
 
@@ -16,7 +16,7 @@ const FollowUnFollow: FC<OwnType> = (props) => {
         <div className = {style.content}>
             <div>
               <NavLink to = {'/profile/' + props.el.id}>
-                <img src={props.el.url && avatar} alt = 'coob' className = {style.img}/>
+                <img src={props.el.photo || avatar} alt = 'avatar' className = {style.img}/>
               </NavLink>
             </div>
             <div>

@@ -2,20 +2,19 @@ import { Component } from "react";
 import { connect } from "react-redux";
 import Preloader from "./Preloader";
 import { AppState } from "./redux/redux";
-import { downReselect } from "./redux/selectors";
 import {
   getFollowThunkCreater,
   getPageChangeThunkCreater, getUnFollowThunkCreater, getUsersThunkCreater
 } from "./redux/usersReduser";
-import Status from "./Status";
 import { UserData } from "./types/types";
+import Users from "./Users";
 
 type MapStateToProps = {
   pageSize: number;
   totalUserCount: number;
   currentPageData: number;
   isFollowingData: Array<number>;
-  dataUsers: Array<UserData>;
+  users: Array<UserData>;
   isLoading: boolean;
   amountPagi: number;
 };
@@ -29,11 +28,8 @@ type MapDispatchToProps = {
 
 class UsersConteiner extends Component<MapStateToProps & MapDispatchToProps> {
   componentDidMount() {
-      this.props.getUsersThunkCreater(
-      this.props.pageSize,
-      this.props.currentPageData
-    );
-  }
+      this.props.getUsersThunkCreater(this.props.pageSize, this.props.currentPageData)
+  };
 
   onPageChange = (el: number) => {
     this.props.getPageChangeThunkCreater(this.props.pageSize, el);
@@ -44,7 +40,7 @@ class UsersConteiner extends Component<MapStateToProps & MapDispatchToProps> {
       <div>
         {this.props.isLoading ? <Preloader /> : null}
         {/* <NewsConteiner {...this.props} /> */}
-        <Status {...this.props} onPageChange={this.onPageChange}/>
+        <Users {...this.props} onPageChange={this.onPageChange}/>
       </div>
     );
   }
@@ -52,7 +48,7 @@ class UsersConteiner extends Component<MapStateToProps & MapDispatchToProps> {
 
 let mapStateToProps = (state: AppState): MapStateToProps => {
   return {
-    dataUsers: downReselect(state),
+    users: state.users.users,
     pageSize: state.users.pageSize,
     totalUserCount: state.users.totalUserCount,
     currentPageData: state.users.currentPage,

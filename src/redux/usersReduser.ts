@@ -8,9 +8,9 @@ import { meAPI } from '../api/meApi';
 
 const initialState = {
   users: [] as Array<UserData>,
-  pageSize: 5 as number,
+  pageSize: 3 as number,
   totalUserCount: 50 as number,
-  currentPage: 1 as number,
+  currentPage: 0 as number,
   amountPagi: 5 as number,
   isLoading: false,
   followingProgress: [] as Array<number>,
@@ -103,9 +103,9 @@ export const getUsersThunkCreater =
   async (dispatch: DispatchType, getState: StateType) => {
     try {
       dispatch(actions.toggleLoading(false));
-      const res = await usersApi.getUsers(pageSize, currentPage);
-      dispatch(actions.setUsers(res.data.data.users));
-      dispatch(actions.totalPages(res.data.headers['x-total-count']));
+      const users = await usersApi.getUsers(pageSize, currentPage);
+     dispatch(actions.setUsers(users));
+     // dispatch(actions.totalPages(res.data.headers));
       dispatch(actions.toggleLoading(false));
     } catch (error) {
       throw new Error('Error in getUsersThunkCreater' + error);
@@ -119,7 +119,7 @@ export const getPageChangeThunkCreater =
       dispatch(actions.currentPage(page));
       dispatch(actions.toggleLoading(true));
       let res = await usersApi.getUsers(pageSize, page);
-      dispatch(actions.setUsers(res.data.data.users));
+      dispatch(actions.setUsers(res));
       dispatch(actions.toggleLoading(false)); 
     } catch (error) {
       throw new Error('Error in getPageChangeThunkCreater' + error);

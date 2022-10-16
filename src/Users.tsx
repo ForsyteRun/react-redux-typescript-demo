@@ -9,17 +9,16 @@ type UserType = {
 };
 
 type PropsType = {
-  dataUsers: Array<UserData>
+  users: Array<UserData>
 };
 
-const Status: FC<UserType&PropsType&PaginationType> = (props) => {
-
+const Users: FC<UserType&PropsType&PaginationType> = (props) => {
+  console.log(props)
   return (
     <div>
-    
-      {props.dataUsers.map((el: UserData) => <FollowUnFollow {...props} el = {el} key={el.id}/>)}
-      <Pagination {...props}/> 
+      {props.users.map((el: UserData) => <FollowUnFollow {...props} el = {el} key={el.id}/>)}
+      {/* <Pagination {...props}/>  */}
     </div>
 )}
 
-export default Status;
+export default Users;

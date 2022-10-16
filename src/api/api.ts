@@ -9,7 +9,7 @@ export const samuraiInstance = axios.create({
 });
 
 export const instanceMock = axios.create({
-  baseURL: "https://630f1ba6498924524a860c3f.mockapi.io/",
+  baseURL: "https://mockend.com/ForsyteRun/react-redux-typescript-demo/",
 });
 
 export enum ResultCodeEnum {

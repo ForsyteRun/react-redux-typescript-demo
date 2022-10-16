@@ -21,3 +21,5 @@ const rootReduser = combineReducers({
 export type AppState = ReturnType<typeof rootReduser>;
 
 export const store = createStore(rootReduser, applyMiddleware(thunk));
+
+

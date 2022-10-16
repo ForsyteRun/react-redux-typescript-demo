@@ -36,7 +36,7 @@ export const setFollowUnFollow = (pageSize: number, currentPage: number) =>
 async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
    try {
       let users = await usersApi.getUsers(pageSize, currentPage);
-      dispatch(actions.setUsers(users.data.data.users))   
+      dispatch(actions.setUsers(users))   
    } catch (error) {
       throw new Error('Error in setFollowUnFollow' + error); 
    } 

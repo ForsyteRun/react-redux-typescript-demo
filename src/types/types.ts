@@ -1,8 +1,9 @@
 export type UserData = {
-   id: number;
-   title: string;
-   url: string;
-   isFollow: boolean;
+  id: number
+  isFollow: boolean
+  name: string
+  photo: string
+  status: string
  };
 
  export type ProfileType = {
