@@ -10,7 +10,7 @@ export let followUnFollowHelper = (
     if (el.id === id) {
       return {
         ...el,
-        follow: followed,
+        isFollow: followed,
       };
     }
     return el;

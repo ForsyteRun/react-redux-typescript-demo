@@ -31,7 +31,7 @@ export const usersApi = {
   },
   setFollow: async (id: number) => {
     try {
-      const res = await instanceMock.put<Follow>(`users/${id}`, {
+      const res = await instanceMock.put<Follow>(`post/${id}`, {
         isFollow: true,
       });
       return res.data;
@@ -41,7 +41,7 @@ export const usersApi = {
   },
   setUnFollow: async (id: number) => {
     try {
-      const res = await instanceMock.put<Follow>(`users/${id}`, {
+      const res = await instanceMock.put<Follow>(`post/${id}`, {
         isFollow: false,
       });
       return res.data;

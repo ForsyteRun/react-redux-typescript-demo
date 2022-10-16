@@ -150,9 +150,10 @@ export const updateNewsThunkCreater =
 export const getFollowThunkCreater =
   (followingProgress: boolean, userId: number) => async (dispatch: DispatchType, getState: StateType) => {
     try {
-      await usersApi.setFollow(userId);
-      dispatch(actions.followAC(userId));
-      dispatch(actions.isFollowing(followingProgress, userId))
+      const res = await usersApi.setFollow(userId);
+      debugger;
+      dispatch(actions.followAC(res.id));
+      dispatch(actions.isFollowing(followingProgress, res.id))
     } catch (error) {
       throw new Error('Error in getFollowThunkCreater' + error);
     }
@@ -161,9 +162,9 @@ export const getFollowThunkCreater =
 export const getUnFollowThunkCreater =
   (followingProgress: boolean, userId: number) => async (dispatch: DispatchType, getState: StateType) => {
     try {
-      await usersApi.setUnFollow(userId);
-      dispatch(actions.unFollowAC(userId));
-      dispatch(actions.isFollowing(followingProgress, userId))
+      const res = await usersApi.setUnFollow(userId);
+      dispatch(actions.unFollowAC(res.id));
+      dispatch(actions.isFollowing(followingProgress, res.id))
     } catch (error) {
       throw new Error('Error in getUnFollowThunkCreater' + error);
     }

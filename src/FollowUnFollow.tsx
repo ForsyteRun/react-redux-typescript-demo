@@ -8,10 +8,11 @@ export type OwnType = {
   el: UserData
   isFollowingData: Array<number>
   getFollowThunkCreater: (followingProgress: boolean, userId: number) => void
+  getUnFollowThunkCreater: (followingProgress: boolean, userId: number) => void
 }
 
 const FollowUnFollow: FC<OwnType> = (props) => {
-
+  debugger;
   return ( 
         <div className = {style.content}>
             <div>
@@ -20,17 +21,13 @@ const FollowUnFollow: FC<OwnType> = (props) => {
               </NavLink>
             </div>
             <div>
-              {props.el.isFollow ?
-                <button disabled = {props.isFollowingData.some(id => id === props.el.id)} onClick={() => {  
-                  
-                  props.getFollowThunkCreater(true, props.el.id);
-              
-                }}>Follow</button>
-              : <button disabled = {props.isFollowingData.some(id => id === props.el.id)} onClick={()=>{
-                
-                props.getFollowThunkCreater(true, props.el.id);
-                             
-                }}>UnFollow</button>}
+              {props.el.isFollow 
+              ? <button  onClick={() => {  
+                  props.getFollowThunkCreater(false, props.el.id);
+              }}>Follow</button>
+              : <button  onClick={()=>{
+                  props.getUnFollowThunkCreater(true, props.el.id);          
+              }}>UnFollow</button>}
             </div>
         </div>
         ) 
