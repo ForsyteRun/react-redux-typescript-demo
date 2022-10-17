@@ -5,8 +5,9 @@ import FollowUnFollow from "./FollowUnFollow";
 
 type UserType = {
   isFollowingData: Array<number>
-  getFollowThunkCreater: (followingProgress: boolean, id: number) => void
-  getUnFollowThunkCreater: (followingProgress: boolean, userId: number) => void  
+  isBtnDisable: boolean
+  getFollowThunkCreater: (userId: number) => void
+  getUnFollowThunkCreater: (userId: number) => void  
 };
 
 type PropsType = {

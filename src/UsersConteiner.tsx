@@ -6,23 +6,13 @@ import {
   getFollowThunkCreater,
   getPageChangeThunkCreater, getUnFollowThunkCreater, getUsersThunkCreater
 } from "./redux/usersReduser";
-import { UserData } from "./types/types";
 import Users from "./Users";
 
-type MapStateToProps = {
-  pageSize: number;
-  totalUserCount: number;
-  currentPageData: number;
-  isFollowingData: Array<number>;
-  users: Array<UserData>;
-  isLoading: boolean;
-  amountPagi: number;
-  offset: number
-};
+type MapStateToProps = ReturnType<typeof mapStateToProps>
 
 type MapDispatchToProps = {
-  getFollowThunkCreater: (followingProgress: boolean, userId: number) => void;
-  getUnFollowThunkCreater: (followingProgress: boolean, userId: number) => void
+  getFollowThunkCreater: (userId: number) => void;
+  getUnFollowThunkCreater: (userId: number) => void
   getUsersThunkCreater: (pageSize: number, offset: number) => void;
   getPageChangeThunkCreater: (pageSize: number, page: number, offset: number) => void;
 };
@@ -32,9 +22,7 @@ class UsersConteiner extends Component<MapStateToProps & MapDispatchToProps> {
       this.props.getUsersThunkCreater(this.props.pageSize, this.props.currentPageData-1)
   };
 
-  onPageChange = (offset: number) => {
-    console.log(offset);
-    
+  onPageChange = (offset: number) => { 
     if(offset >2) {
       this.props.getPageChangeThunkCreater(this.props.pageSize, offset, offset + this.props.pageSize);
     }else if (offset === 1){
@@ -55,7 +43,7 @@ class UsersConteiner extends Component<MapStateToProps & MapDispatchToProps> {
   }
 }
 
-let mapStateToProps = (state: AppState): MapStateToProps => {
+const mapStateToProps = (state: AppState) => {
   return {
     users: state.users.users,
     pageSize: state.users.pageSize,
@@ -64,7 +52,8 @@ let mapStateToProps = (state: AppState): MapStateToProps => {
     isLoading: state.users.isLoading,
     isFollowingData: state.users.followingProgress,
     amountPagi: state.users.amountPagi,
-    offset: state.users.offset
+    offset: state.users.offset,
+    isBtnDisable: state.users.btnDisable
   };
 };
 

@@ -16,16 +16,9 @@ const MusicConteiner = lazy(() => import('./MusicConteiner'));
 const AuthConteiner = lazy(() => import('./AuthConteiner'));
 const RegisterConteiner = lazy(() => import('./RegisterConteiner'));
 
+type MapStateToProps = ReturnType<typeof mapStateToProps>
 
-type MapStateToProps = {
-  isInitial: boolean
-};
-type MapDispatchToProps = {};
-type OwnProps = {};
-
-type AppType = MapStateToProps & MapDispatchToProps & OwnProps;
-
-const App: FC<AppType> = (props) => {
+const App: FC<MapStateToProps> = (props) => {
 
   const [num, setNum] = useState(0);
 
@@ -43,7 +36,7 @@ const App: FC<AppType> = (props) => {
 
   return (
     <div>
-      <HeaderConteiner title = 'Start building'/>
+      <HeaderConteiner />
       <div className={styles.App}>
         <button onClick={increment}>+</button>
         <button onClick={dicrement}>-</button>
@@ -63,7 +56,7 @@ const App: FC<AppType> = (props) => {
           <Routes>
             <Route path='*' element={<NoPage/>} />
             <Route path="/music" element={<MusicConteiner />} />
-            <Route path='/auth' element={<AuthConteiner isAuth={false} />} />
+            <Route path='/auth' element={<AuthConteiner />} />
             <Route path='/register' element={<RegisterConteiner />} />
             <Route path='/myprofile' element={<MyProfileConteiner />} />
           </Routes>
@@ -73,10 +66,10 @@ const App: FC<AppType> = (props) => {
   );
 }
 
-const mapStateToProps = (state: AppState): MapStateToProps => {
+const mapStateToProps = (state: AppState) => {
   return {
     isInitial: state.init.isInitial
   }
 };
 
-export default connect(mapStateToProps)(App)
+export default connect<MapStateToProps, {}, {}, AppState>(mapStateToProps)(App)

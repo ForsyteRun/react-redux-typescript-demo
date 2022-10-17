@@ -5,9 +5,7 @@ import NewsHooks from "./NewsHooks";
 import { AppState } from "./redux/redux";
 import { getNewsThunkCreater, updateNewsThunkCreater } from './redux/usersReduser';
 
-type MSTPType = {
-   status: string
-};
+type MSTPType = ReturnType<typeof mapStateToProps>
 
 type MapDSTPType= {
    getNewsThunkCreater: () => void
@@ -30,11 +28,11 @@ class NewsConteiner extends Component<MSTPType&MapDSTPType>{
    }
 };
 
-const mapStateToProps = (state: AppState): MSTPType => {
+const mapStateToProps = (state: AppState) => {
    return {
       status: state.users.status
    }
 };
 
-export default connect(mapStateToProps, {getNewsThunkCreater,
+export default connect<MSTPType, MapDSTPType, {}, AppState>(mapStateToProps, {getNewsThunkCreater,
      updateNewsThunkCreater})(NewsConteiner)

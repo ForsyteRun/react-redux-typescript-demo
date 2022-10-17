@@ -1,20 +1,20 @@
-import React, { FC } from "react";
+import { FC, ReactNode } from "react";
 import Preloader from "./Preloader";
+import { UserData } from "./types/types";
 
 type PropsType = {
-  data: boolean
+  el: ReactNode
 };
 
 const Profile: FC<PropsType> = (props) => {
 
-  if (!props.data){
-    return <Preloader/>
-  }
-
+  // if (!props.userProfile){
+  //   return <Preloader/>
+  // }
+debugger;
   return (
     <div>
-      <div>{props.data}</div>
-      <div>{props.data}</div>
+         {props.el}
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const instance = axios.create({
-  baseURL: "https://jsonplaceholder.typicode.com/",
+  baseURL: 'https://630f1ba6498924524a860c3f.mockapi.io/',
 });
 
 export const samuraiInstance = axios.create({

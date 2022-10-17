@@ -1,39 +1,35 @@
 import React, { Component } from "react";
-import Profile from "./Profile";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import { getUsersThunkCreater } from './redux/usersReduser';
-import { AppState } from "./redux/redux";
 import { compose } from "redux";
+import { AppState } from "./redux/redux";
+import { getUserProfileThunkCreater } from './redux/usersReduser';
 
-type MSTPT = {
-  userProfile: boolean
-};
+type MSTPT = ReturnType<typeof mapStateToProps>
 
 type MapDTP = {
-  getUsersThunkCreater: (match: number) => void
-}
-
+  getUserProfileThunkCreater: (match: number) => void
+};
 class ProfileConteiner extends Component<MSTPT&MapDTP>{
   
   componentDidMount(){
     //@ts-ignore
-    let match = this.props.router.params.id;
-    this.props.getUsersThunkCreater(match);
+    let match: number = this.props.router.params.id;
+    this.props.getUserProfileThunkCreater(match);
   }
 
   render(){
     return (
       <div>
-        <Profile data={this.props.userProfile}/>
+      
       </div>
     )
   }
-}
+};
 
-let mapStateToProps = (state: AppState): MSTPT => {
+const mapStateToProps = (state: AppState) => {
   return{
-    userProfile: state.users.isLoading
+    userProfile: state.users.users
   }
 }
  
@@ -50,5 +46,5 @@ const withRouter = (WrappedComponent: React.ComponentType) => (props: any) => {
 }
 
 export default compose <React.ComponentType>(
-  connect(mapStateToProps, {getUsersThunkCreater}),
+  connect(mapStateToProps, {getUserProfileThunkCreater}),
   withRouter)(ProfileConteiner)

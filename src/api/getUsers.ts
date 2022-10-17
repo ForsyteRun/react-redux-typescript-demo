@@ -1,10 +1,8 @@
-import axios from "axios";
 import { UserData } from "../types/types";
-import { instanceMock } from "./api";
+import { instance, instanceMock } from "./api";
 
 type GetUsersApi =  Array<UserData>;
   
-
 type Follow = {
   id: number;
   isFollow: boolean;
@@ -17,13 +15,13 @@ export const usersApi = {
         `post?limit=${pageSize}&offset=${offset}`
       );
       return res.data;
-    } catch (error: any) {
-      throw new Error(`Error in getUsersApi: ${error.message}`);
+    } catch (error) {
+      throw new Error(`Error in getUsersApi: ${error}`);
     }
   }, 
   getUserProfile: async (id: number) => {
     try {
-      const res = await axios.get<UserData>(instanceMock + "users/" + id);
+      const res = await instance.get<UserData>('users/' + id);
       return res.data;
     } catch (error) {
       throw new Error(`Error in getUserProfile: ${error}`);

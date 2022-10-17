@@ -5,35 +5,26 @@ import { outAuthThunkCreater } from "./redux/authReduser";
 import { AppState } from "./redux/redux";
 import { getEmail, getIsAuth, getLogin } from "./redux/selectors";
 
-type MapStateToPropsType = {
-  login: string | null
-  isAuth: boolean
-  email: string | null
-};
+type MapStateToPropsType = ReturnType<typeof mapStateToProps>
 
 type MapDispatchToPropsType = {
   outAuthThunkCreater: () => void
 };
 
-type OwnPropsType = {
-  title: string
-};
-
-type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType;
+type PropsType = MapStateToPropsType & MapDispatchToPropsType;
 
 class HeaderConteiner extends Component<PropsType>{
 
  render() {
      return (
       <>
-      <h2>{this.props.title}</h2>
-      <Header {...this.props}/>
+        <Header {...this.props}/>
       </>
      ) 
   }
 };
 
-const mapStateToProps = (state: AppState): MapStateToPropsType => {
+const mapStateToProps = (state: AppState) => {
   return {
     login: getLogin(state),
     isAuth: getIsAuth(state),
@@ -41,5 +32,4 @@ const mapStateToProps = (state: AppState): MapStateToPropsType => {
   }
 };
 
-//<TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState>
-export default connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppState>(mapStateToProps, {outAuthThunkCreater})(HeaderConteiner);
+export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppState>(mapStateToProps, {outAuthThunkCreater})(HeaderConteiner);

@@ -1,19 +1,11 @@
-import { connect } from "react-redux";
 import { Component } from "react";
+import { connect } from "react-redux";
 import MyProfile from "./MyProfile";
 import { getHeaderThunkCreater } from './redux/authReduser';
-import { getProfileData, upLoadProfileData } from './redux/myProfileReducer';
-import { getImageProfile, setImageProfileThunk} from './redux/myProfileReducer';
+import { getImageProfile, getProfileData, setImageProfileThunk, upLoadProfileData } from './redux/myProfileReducer';
 import { AppState } from "./redux/redux";
-import { ProfileType } from "./types/types";
 
-type MSTPType = {
-  isAuth: boolean
-  imageProfile: string | null
-  isLoading: boolean
-  profileData: ProfileType
-  editLogoForm: boolean
-};
+type MSTPType = ReturnType<typeof mapStateToProps>
 
 type DispatchPropsType = {
   getImageProfile: () => void
@@ -23,7 +15,7 @@ type DispatchPropsType = {
 
 type OwnType = {
   setImageProfileThunk: (imageUrl: string) => void
-}
+};
 
 class MyProfileConteiner extends Component<MSTPType & DispatchPropsType & OwnType> {
 //   if (!isAuth) {
@@ -46,7 +38,7 @@ class MyProfileConteiner extends Component<MSTPType & DispatchPropsType & OwnTyp
   }
 };
 
-const mapStateToProps = (state: AppState): MSTPType => {
+const mapStateToProps = (state: AppState) => {
   return{
     isAuth: state.auth.isAuth,
     imageProfile: state.myProfile.profileInfo.image,

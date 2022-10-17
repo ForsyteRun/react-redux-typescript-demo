@@ -4,22 +4,13 @@ import Auth from "./Auth";
 import { enterAuthThunkCreater } from "./redux/authReduser";
 import { AppState } from "./redux/redux";
 
-type MSTP = {
-  login: string | null,
-  email: string | null,
-  rememberMe: boolean,
-  captcha: string | null
-};
+type MSTP = ReturnType<typeof mapStateToProps>
 
 type MapDSTP = {
   enterAuthThunkCreater: (values: MSTP, setSubmitting: (isSubmitting: boolean) => void) => void
-}
+};
 
-type OwnProps = {
-  isAuth: boolean
-}
-
-class AuthConteiner extends Component<MSTP&MapDSTP&OwnProps> {
+class AuthConteiner extends Component<MSTP&MapDSTP> {
   render(){
     return(
       <div>
@@ -29,7 +20,7 @@ class AuthConteiner extends Component<MSTP&MapDSTP&OwnProps> {
   }
 }
 
-let mapStateToProps = (state: AppState): MSTP&OwnProps => {
+const mapStateToProps = (state: AppState) => {
   return {
     login: state.auth.login,
     email: state.auth.email,
@@ -39,4 +30,4 @@ let mapStateToProps = (state: AppState): MSTP&OwnProps => {
   }
 };
 
-export default connect<MSTP, MapDSTP, OwnProps, AppState>(mapStateToProps, {enterAuthThunkCreater})(AuthConteiner);
+export default connect<MSTP, MapDSTP, {}, AppState>(mapStateToProps, {enterAuthThunkCreater})(AuthConteiner);

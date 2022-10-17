@@ -4,11 +4,7 @@ import {connect} from 'react-redux';
 import { compose } from "redux";
 import { AppState } from "./redux/redux";
 
-type PropsType = {
-   login:  string | null
-   email: string | null
-};
-
+type PropsType = ReturnType<typeof mapStateToProps>
 class RegisterConteiner extends Component<PropsType>{
    
    render(){
@@ -18,7 +14,7 @@ class RegisterConteiner extends Component<PropsType>{
    }
 };
 
-const mapStateToProps = (state: AppState): PropsType => {
+const mapStateToProps = (state: AppState) => {
    return {
       login: state.auth.login,
       email: state.auth.email

@@ -17,6 +17,7 @@ type MapDTP = {
 
 type OwnProps = {
   isAuth: boolean
+  children: string
 }
 
 const AuthForm: FC<MapDTP&PropsType&OwnProps> = (props) => {

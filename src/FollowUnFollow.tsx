@@ -7,12 +7,13 @@ import { UserData } from "./types/types";
 export type OwnType = {
   el: UserData
   isFollowingData: Array<number>
-  getFollowThunkCreater: (followingProgress: boolean, userId: number) => void
-  getUnFollowThunkCreater: (followingProgress: boolean, userId: number) => void
+  isBtnDisable: boolean
+  getFollowThunkCreater: (userId: number) => void
+  getUnFollowThunkCreater: (userId: number) => void
 }
 
 const FollowUnFollow: FC<OwnType> = (props) => {
-  debugger;
+  
   return ( 
         <div className = {style.content}>
             <div>
@@ -22,11 +23,11 @@ const FollowUnFollow: FC<OwnType> = (props) => {
             </div>
             <div>
               {props.el.isFollow 
-              ? <button onClick={() => {  
-                props.getUnFollowThunkCreater(false, props.el.id);  
+              ? <button disabled={props.isFollowingData.some(id => id === props.el.id )} onClick={() => {  
+                props.getUnFollowThunkCreater(props.el.id);  
               }}>UnFollow</button>
-              : <button  onClick={()=>{
-                props.getFollowThunkCreater(true, props.el.id);    
+              : <button disabled={props.isFollowingData.some(id => id === props.el.id )} onClick={()=>{
+                props.getFollowThunkCreater(props.el.id);    
               }}>Follow</button>}
             </div>
         </div>
