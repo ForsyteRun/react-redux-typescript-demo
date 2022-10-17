@@ -151,7 +151,6 @@ export const getFollowThunkCreater =
   (followingProgress: boolean, userId: number) => async (dispatch: DispatchType, getState: StateType) => {
     try {
       const res = await usersApi.setFollow(userId);
-      debugger;
       dispatch(actions.followAC(res.id));
       dispatch(actions.isFollowing(followingProgress, res.id))
     } catch (error) {

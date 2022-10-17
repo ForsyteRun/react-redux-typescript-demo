@@ -23,11 +23,11 @@ const FollowUnFollow: FC<OwnType> = (props) => {
             <div>
               {props.el.isFollow 
               ? <button  onClick={() => {  
-                  props.getFollowThunkCreater(false, props.el.id);
-              }}>Follow</button>
+                props.getUnFollowThunkCreater(false, props.el.id);  
+              }}>UnFollow</button>
               : <button  onClick={()=>{
-                  props.getUnFollowThunkCreater(true, props.el.id);          
-              }}>UnFollow</button>}
+                props.getFollowThunkCreater(true, props.el.id);    
+              }}>Follow</button>}
             </div>
         </div>
         ) 
