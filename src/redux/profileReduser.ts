@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { usersApi } from '../api/getUsers';
-import { ActionType, UserData } from '../types/types';
+import { ActionsType, UserData } from '../types/types';
 
 const initialState = {
    isFollow: false,
@@ -15,7 +15,7 @@ const initialState = {
 };
 
 type InitialState = typeof initialState;
-type Actions = ReturnType<ActionType<typeof actions>>
+type Actions = ActionsType<typeof actions>
 
 export const profileReduser = (state: InitialState = initialState, action: Actions):InitialState => {
    switch (action.type) {

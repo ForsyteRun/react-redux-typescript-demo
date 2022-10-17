@@ -1,6 +1,6 @@
 import { ResultCodeEnum} from './../api/api';
 import { Dispatch } from "redux";
-import { ActionType } from '../types/types';
+import { ActionsType } from '../types/types';
 import { meAPI } from '../api/meApi';
 import { authAPI } from '../api/authApi';
 import { securityApi } from '../api/securityApi';
@@ -16,7 +16,7 @@ const initialState = {
 };
 
 export type InitialState = typeof initialState;
-type Actions = ReturnType<ActionType<typeof actions>>;
+type Actions = ActionsType<typeof actions>
 
 export const authReduser = (state: InitialState = initialState, action: Actions): InitialState => {
    switch (action.type) {

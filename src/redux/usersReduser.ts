@@ -1,10 +1,10 @@
 
-import { ActionType } from '../types/types';
 import { Dispatch } from "redux";
-import { followUnFollowHelper } from "../common/helperReduser";
-import { UserData } from '../types/types';
 import { usersApi } from '../api/getUsers';
 import { meAPI } from '../api/meApi';
+import { followUnFollowHelper } from "../common/helperReduser";
+import { ActionsType, UserData } from '../types/types';
+;
 
 const initialState = {
   users: [] as Array<UserData>,
@@ -19,7 +19,7 @@ const initialState = {
 };
 
 type InitialState = typeof initialState;
-type Actions = ReturnType<ActionType<typeof actions>>
+type Actions = ActionsType<typeof actions>
 
 //reduser - logic of statusPage
 export const usersReduser = (

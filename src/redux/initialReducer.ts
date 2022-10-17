@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { ActionType } from "../types/types";
+import { ActionsType } from "../types/types";
 import { getHeaderThunkCreater } from "./authReduser";
 
 const initialState = {
@@ -7,7 +7,7 @@ const initialState = {
 };
 
 export type InitialState = typeof initialState;
-type Actions = ReturnType<ActionType<typeof actions>>
+type Actions = ActionsType<typeof actions>
 
 export const initialReducer = (
   state: InitialState = initialState,

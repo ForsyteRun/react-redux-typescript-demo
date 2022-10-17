@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { meAPI } from "../api/meApi";
-import { ActionType, ProfileType } from "../types/types";
+import { ActionsType, ProfileType } from "../types/types";
 
 const initialState = {
    profileInfo: {
@@ -14,7 +14,7 @@ const initialState = {
 };
 
 type InitialState = typeof initialState;
-type Actions = ReturnType<ActionType<typeof actions>>
+type Actions = ActionsType<typeof actions>
 
 export const myProfileReducer = (state: InitialState = initialState, action: Actions): InitialState => {
    switch (action.type) {

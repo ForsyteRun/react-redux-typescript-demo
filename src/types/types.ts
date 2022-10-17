@@ -1,3 +1,5 @@
+export type ActionsType<T> = T extends {[key:string]: (...args: any[]) => infer U} ? U : never
+
 export type UserData = {
   id: number
   isFollow: boolean
@@ -13,8 +15,6 @@ export type UserData = {
   //id: number
   image: string | null
 };
-
-export type ActionType<T> = T extends {[kye: string]: infer R} ? R : never;
 
 // const initialState = {
 //   firstName: '', 
