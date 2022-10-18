@@ -1,4 +1,4 @@
-
+import { FormikValues } from 'formik';
 import { Dispatch } from "redux";
 import { usersApi } from '../api/getUsers';
 import { meAPI } from '../api/meApi';
@@ -17,7 +17,7 @@ const initialState = {
   isLoading: false,
   followingProgress: [] as Array<number>,
   btnDisable: false,
-  status: "enter status" as string,
+  status:'fff' as string,
 };
 
 type InitialState = typeof initialState;

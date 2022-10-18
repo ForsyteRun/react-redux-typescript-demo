@@ -1,20 +1,22 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 import Preloader from "./Preloader";
 import { UserData } from "./types/types";
 
 type PropsType = {
-  el: ReactNode
+  userProfile: UserData
 };
 
-const Profile: FC<PropsType> = (props) => {
+const Profile: FC<PropsType> = ({userProfile}) => {
 
-  // if (!props.userProfile){
-  //   return <Preloader/>
-  // }
-debugger;
+  if (!userProfile){
+    return <Preloader/>
+  };
+
   return (
     <div>
-         {props.el}
+       <img src={userProfile.photo} alt='userPhoto'/>
+       <div>{userProfile.name}</div>
+       <div>{userProfile.status}</div>
     </div>
   )
 }

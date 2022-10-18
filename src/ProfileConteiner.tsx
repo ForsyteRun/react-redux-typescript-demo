@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { compose } from "redux";
+import Profile from "./Profile";
 import { AppState } from "./redux/redux";
 import { getUserProfileThunkCreater } from './redux/usersReduser';
 
@@ -21,7 +22,7 @@ class ProfileConteiner extends Component<MSTPT&MapDTP>{
   render(){
     return (
       <div>
-      
+        <Profile userProfile={this.props.userProfile}/>
       </div>
     )
   }
@@ -29,7 +30,7 @@ class ProfileConteiner extends Component<MSTPT&MapDTP>{
 
 const mapStateToProps = (state: AppState) => {
   return{
-    userProfile: state.users.users
+    userProfile: state.users.userProfile
   }
 }
  

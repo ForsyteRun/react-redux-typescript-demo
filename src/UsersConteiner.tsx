@@ -36,7 +36,6 @@ class UsersConteiner extends Component<MapStateToProps & MapDispatchToProps> {
     return (
       <div>
         {this.props.isLoading ? <Preloader /> : null}
-        {/* <NewsConteiner {...this.props} /> */}
         <Users {...this.props} onPageChange={this.onPageChange}/>
       </div>
     );
@@ -53,7 +52,7 @@ const mapStateToProps = (state: AppState) => {
     isFollowingData: state.users.followingProgress,
     amountPagi: state.users.amountPagi,
     offset: state.users.offset,
-    isBtnDisable: state.users.btnDisable
+    isBtnDisable: state.users.btnDisable,
   };
 };
 

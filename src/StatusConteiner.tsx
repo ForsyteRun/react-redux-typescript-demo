@@ -1,9 +1,9 @@
+import { FormikValues } from "formik";
 import { Component } from "react";
 import { connect } from 'react-redux';
-import News from "./News";
-import NewsHooks from "./NewsHooks";
 import { AppState } from "./redux/redux";
 import { getNewsThunkCreater, updateNewsThunkCreater } from './redux/usersReduser';
+import Status from "./Status";
 
 type MSTPType = ReturnType<typeof mapStateToProps>
 
@@ -12,17 +12,18 @@ type MapDSTPType= {
    updateNewsThunkCreater: (newStatus: string) => void
 };
 
-class NewsConteiner extends Component<MSTPType&MapDSTPType>{
-
+class StatusConteiner extends Component<MSTPType&MapDSTPType>{
    componentDidMount(){
      this.props.getNewsThunkCreater();
    };
 
    render(){
+      const{getNewsThunkCreater, ...restProps} = this.props;
+      
       return (
          <div>
-            <News {...this.props}/>
-            <NewsHooks {...this.props}/>
+            <Status {...restProps}/>
+            {/* <NewsHooks {...this.props}/> */} 
          </div>
       )
    }
@@ -35,4 +36,4 @@ const mapStateToProps = (state: AppState) => {
 };
 
 export default connect<MSTPType, MapDSTPType, {}, AppState>(mapStateToProps, {getNewsThunkCreater,
-     updateNewsThunkCreater})(NewsConteiner)
+     updateNewsThunkCreater})(StatusConteiner)

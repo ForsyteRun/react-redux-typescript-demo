@@ -1,8 +1,6 @@
 import { UserData } from "../types/types";
-import { instance, instanceMock } from "./api";
+import { instanceMock } from "./api";
 
-type GetUsersApi =  Array<UserData>;
-  
 type Follow = {
   id: number;
   isFollow: boolean;
@@ -11,7 +9,7 @@ type Follow = {
 export const usersApi = {
   getUsers: async (pageSize: number = 3, offset: number) => {
     try {
-      const res = await instanceMock.get<GetUsersApi>(
+      const res = await instanceMock.get<Array<UserData>>(
         `post?limit=${pageSize}&offset=${offset}`
       );
       return res.data;
@@ -21,7 +19,7 @@ export const usersApi = {
   }, 
   getUserProfile: async (id: number) => {
     try {
-      const res = await instance.get<UserData>('users/' + id);
+      const res = await instanceMock.get<UserData>('post/' + id);
       return res.data;
     } catch (error) {
       throw new Error(`Error in getUserProfile: ${error}`);

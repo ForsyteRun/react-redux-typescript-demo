@@ -4,6 +4,7 @@ import MyProfile from "./MyProfile";
 import { getHeaderThunkCreater } from './redux/authReduser';
 import { getImageProfile, getProfileData, setImageProfileThunk, upLoadProfileData } from './redux/myProfileReducer';
 import { AppState } from "./redux/redux";
+import StatusConteiner from "./StatusConteiner";
 
 type MSTPType = ReturnType<typeof mapStateToProps>
 
@@ -32,7 +33,8 @@ class MyProfileConteiner extends Component<MSTPType & DispatchPropsType & OwnTyp
   render() {
     return (
       <div>
-        <MyProfile {...this.props}/>
+        <StatusConteiner  />
+        {/* <MyProfile {...this.props}/> */}
       </div>
     )
   }

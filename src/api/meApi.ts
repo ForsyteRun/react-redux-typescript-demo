@@ -1,3 +1,4 @@
+import { FormikValues } from 'formik';
 import { instanceMock, ResultCodeEnum, samuraiInstance } from "./api";
 
 type AuthMe = {
