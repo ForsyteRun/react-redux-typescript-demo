@@ -10,7 +10,8 @@ const initialState = {
       id: 1,
       image: ''
       } as ProfileType,
-   editLogoForm: false
+   editLogoForm: false,
+   status: 'start'
 };
 
 type InitialState = typeof initialState;
@@ -19,15 +20,47 @@ type Actions = ActionsType<typeof actions>
 export const myProfileReducer = (state: InitialState = initialState, action: Actions): InitialState => {
    switch (action.type) {
       case 'typescript/SET_IMAGE_PROFILE':
-         return  Object.assign({}, state, {image: action.url})        
+         return  Object.assign({}, state, {image: action.url});   
+      case 'minin/statusReduser/GET_STATUS':
+         return {
+            ...state,
+            status: action.status,
+         };   
+      case 'minin/statusReduser/UPDATE_STATUS':
+         return {
+            ...state,
+            status: action.status,
+         };
       default:
       return state
    }
 };
 
 export const actions = {
+   getStatus: (status: string) => ({type: 'minin/statusReduser/GET_STATUS', status}as const),
+   updateStatus: (status: string) => ({type: 'minin/statusReduser/UPDATE_STATUS', status}as const),
    setImageProfile: (url: string) => ({type: 'typescript/SET_IMAGE_PROFILE', url} as const),
 };
+
+export const getStatusThunkCreater =
+  () => async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
+    try {
+      const res = await meAPI.getStatus();
+      dispatch(actions.getStatus(res.status)); 
+    } catch (error) {
+      throw new Error('Error in getNewsStatusCreater' + error);
+    }
+  };
+
+export const updateStatusThunkCreater =
+  (status: string) => async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
+    try {  
+      await meAPI.updateStatus(status);
+      dispatch(actions.updateStatus(status));
+    } catch (error) {
+      throw new Error('Error in updateNewsStatusCreater' + error);
+    }
+  };
 
 export const setImageProfileThunk = (url: string) => async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
    try {

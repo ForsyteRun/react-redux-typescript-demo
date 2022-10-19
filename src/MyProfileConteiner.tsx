@@ -30,7 +30,7 @@ class MyProfileConteiner extends Component<MSTPType & DispatchPropsType & OwnTyp
       this.props.getProfileData();
     };  
 
-  render() {
+  render() {   
     return (
       <div>
         <StatusConteiner  />

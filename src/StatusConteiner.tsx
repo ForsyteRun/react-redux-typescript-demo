@@ -1,28 +1,35 @@
-import { FormikValues } from "formik";
 import { Component } from "react";
 import { connect } from 'react-redux';
 import { AppState } from "./redux/redux";
-import { getNewsThunkCreater, updateNewsThunkCreater } from './redux/usersReduser';
+import { getStatusThunkCreater, updateStatusThunkCreater } from './redux/myProfileReducer';
 import Status from "./Status";
 
 type MSTPType = ReturnType<typeof mapStateToProps>
 
 type MapDSTPType= {
-   getNewsThunkCreater: () => void
-   updateNewsThunkCreater: (newStatus: string) => void
+   getStatusThunkCreater: () => void
+   updateStatusThunkCreater: (newStatus: string) => void
 };
 
 class StatusConteiner extends Component<MSTPType&MapDSTPType>{
    componentDidMount(){
-     this.props.getNewsThunkCreater();
+      console.log('did mount');
+     this.props.getStatusThunkCreater();
+   };
+
+   componentDidUpdate(){
+      console.log('did update');
+      
+      this.props.getStatusThunkCreater();
    };
 
    render(){
-      const{getNewsThunkCreater, ...restProps} = this.props;
+console.log(this.props)
+
       
       return (
          <div>
-            <Status {...restProps}/>
+            <Status {...this.props}/>
             {/* <NewsHooks {...this.props}/> */} 
          </div>
       )
@@ -31,9 +38,9 @@ class StatusConteiner extends Component<MSTPType&MapDSTPType>{
 
 const mapStateToProps = (state: AppState) => {
    return {
-      status: state.users.status
+      status: state.myProfile.status
    }
 };
 
-export default connect<MSTPType, MapDSTPType, {}, AppState>(mapStateToProps, {getNewsThunkCreater,
-     updateNewsThunkCreater})(StatusConteiner)
+export default connect<MSTPType, MapDSTPType, {}, AppState>(mapStateToProps, {getStatusThunkCreater,
+     updateStatusThunkCreater})(StatusConteiner)

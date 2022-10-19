@@ -1,5 +1,5 @@
 import { FormikValues } from 'formik';
-import { instanceMock, ResultCodeEnum, samuraiInstance } from "./api";
+import { instance, instanceMock, ResultCodeEnum, samuraiInstance } from "./api";
 
 type AuthMe = {
    data: {
@@ -41,7 +41,7 @@ export const meAPI = {
    //load status me
    getStatus: async () => {
      try {
-       const res = await instanceMock.get<Status>("status/1");
+       const res = await instance.get<Status>("status/1");
        return res.data;
      } catch (error) {
        throw new Error(`Error in getStatus: ${error}`);
@@ -51,7 +51,7 @@ export const meAPI = {
    //update status of me
    updateStatus: async (status: string) => {
      try {
-       const res = await instanceMock.put<Status>("status/1", {
+       const res = await instance.put<Status>("status/1", {
          status: status,
        });
        return res.data;

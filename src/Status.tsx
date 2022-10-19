@@ -1,34 +1,41 @@
 import { Field, Form, FormikProps, FormikValues, withFormik } from "formik";
-import { FC, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 
 type PropsType = {
    status: string
-   updateNewsThunkCreater: (newStatus: string) => void
+   getStatusThunkCreater:()=>void
+   updateStatusThunkCreater: (newStatus: string) => void
 };
 
 const StatusForm: FC<FormikProps<PropsType>&PropsType>=(props)=> {
     
      const{ values, touched, handleChange, handleSubmit, errors, status } = props;
-      console.log(props);
       
-     const[editMode, setEditMode] = useState<boolean>(true)
+     const[editMode, setEditMode] = useState<boolean>(false)
+     
+     if(editMode){
+      props.getStatusThunkCreater()
+      // props.updateStatusThunkCreater(values.status)
+      console.log(props);
+     };
+     console.log(props);
+     
    return(
       <div>
-          { editMode &&
+          { !editMode &&
                <div>
-                  <span onDoubleClick ={()=>setEditMode(false) as any}> 
-                     {props.status}
+                  <span onDoubleClick ={()=>setEditMode(true)}> 
+                     {props.values.status}
                   </span>
                </div>
             }
-            { !editMode &&
+            { editMode &&
                <div style={{alignSelf:'center'}}>          
                  <Form name = 'status'>
                      <Field 
-                     name = 'status' 
-                     onBlur={()=>setEditMode(true)} 
-                     value = {props.status} 
-                     onChange = {()=>handleChange}       
+                     name = 'status'
+                     onBlur={()=>setEditMode(false)} 
+                     value = {values.status}    
                      autoFocus = {true}
                      />
                      {/* //{touched.status && <div className ={styles.errors}>{errors.status}</div>} */}
@@ -38,20 +45,6 @@ const StatusForm: FC<FormikProps<PropsType>&PropsType>=(props)=> {
       </div>
    )
 };
-
-   // activeEditMode = () => {
-   //    this.setState ({
-   //       editMode: false,
-   //    })
-   // };
-
-   // deactivateEditMode = () => {
-   //    this.setState({
-   //       editMode: true,
-   //    })
-   //    this.props.updateNewsThunkCreater(this.state.status);
-   // };
-
    // const[editMode, setEditMode] = useState(true)as any
    // const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
    //    // this.setState({
@@ -87,12 +80,11 @@ const StatusForm: FC<FormikProps<PropsType>&PropsType>=(props)=> {
    // }
 
 const Status = withFormik<PropsType, FormikValues>({
-   mapPropsToValues: (props) => ({ status: '22' }),
+   mapPropsToValues: (props) => ({ status: props.status}),
 
-   handleSubmit: (values, props) => {
-      props.props.updateNewsThunkCreater(values.status)
-   },
-   enableReinitialize: true, 
+   handleSubmit: (values) => console.log(values),
+   
+   enableReinitialize: true,   
  })(StatusForm);
 
 export default Status;

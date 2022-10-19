@@ -17,7 +17,6 @@ const initialState = {
   isLoading: false,
   followingProgress: [] as Array<number>,
   btnDisable: false,
-  status:'fff' as string,
 };
 
 type InitialState = typeof initialState;
@@ -74,16 +73,6 @@ export const usersReduser = (
              ? [...state.followingProgress, action.id]
              : state.followingProgress.filter((el: number) => el !== action.id)
        }
-    case 'minin/statusReduser/GET_STATUS':
-      return {
-        ...state,
-        status: action.status,
-      };
-    case 'minin/statusReduser/UPDATE_STATUS':
-      return {
-        ...state,
-        status: action.status,
-      };
     default:
       return state;
   }
@@ -102,8 +91,6 @@ export const actions = {
   toggleLoading: (isLoading: boolean) => ({type: 'minin/statusReduser/toggle_loading', isLoading}as const),
   isBtnDisable: (btnDisable: boolean) => ({type: 'minin/statusReduser/isBtnDisable', btnDisable}as const),
   isFollowing: (followingProgress: boolean, id: number) => ({type: 'minin/statusReduser/IS_FOLLOWING_PROGRESS', id, followingProgress} as const),
-  getStatus: (status: string) => ({type: 'minin/statusReduser/GET_STATUS', status}as const),
-  updateStatus: (status: string) => ({type: 'minin/statusReduser/UPDATE_STATUS', status}as const),
 };
 
 
@@ -146,26 +133,6 @@ export const getPageChangeThunkCreater =
       dispatch(actions.toggleLoading(false)); 
     } catch (error) {
       throw new Error('Error in getPageChangeThunkCreater' + error);
-    }
-  };
-
-export const getNewsThunkCreater =
-  () => async (dispatch: DispatchType, getState: StateType) => {
-    try {
-      let res = await meAPI.getStatus();
-      dispatch(actions.getStatus(res.status)); 
-    } catch (error) {
-      throw new Error('Error in getNewsThunkCreater' + error);
-    }
-  };
-
-export const updateNewsThunkCreater =
-  (status: string) => async (dispatch: DispatchType, getState: StateType) => {
-    try {
-      await meAPI.updateStatus(status);
-      dispatch(actions.updateStatus(status));
-    } catch (error) {
-      throw new Error('Error in updateNewsThunkCreater' + error);
     }
   };
 
