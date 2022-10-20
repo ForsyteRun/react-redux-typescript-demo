@@ -1,8 +1,9 @@
-import { Component } from "react";
+import { PureComponent } from "react";
 import { connect } from 'react-redux';
 import { AppState } from "./redux/redux";
 import { getStatusThunkCreater, updateStatusThunkCreater } from './redux/myProfileReducer';
 import Status from "./Status";
+import StatusHooks from "./StatusHooks";
 
 type MSTPType = ReturnType<typeof mapStateToProps>
 
@@ -10,27 +11,18 @@ type MapDSTPType= {
    getStatusThunkCreater: () => void
    updateStatusThunkCreater: (newStatus: string) => void
 };
-
-class StatusConteiner extends Component<MSTPType&MapDSTPType>{
+//render two ways///
+class StatusConteiner extends PureComponent<MSTPType&MapDSTPType>{
    componentDidMount(){
-      console.log('did mount');
-     this.props.getStatusThunkCreater();
-   };
-
-   componentDidUpdate(){
-      console.log('did update');
-      
       this.props.getStatusThunkCreater();
    };
 
-   render(){
-console.log(this.props)
-
-      
+  render(){  
+   const{getStatusThunkCreater, ...restProps} = this.props;
       return (
          <div>
-            <Status {...this.props}/>
-            {/* <NewsHooks {...this.props}/> */} 
+            <Status {...restProps}/>
+            <StatusHooks {...restProps}/> 
          </div>
       )
    }

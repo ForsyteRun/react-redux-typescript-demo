@@ -4,9 +4,7 @@ export const validate = yup.object().shape({
    login: yup.string()
    .required('Required'),
    password: yup.string()
-   .required('required'),
-   status: yup.string().required('status not done')
-   .min(5, 'min 5 simbols')
+   .required('required')
 });
 
 export const validateAuth = yup.object().shape({
@@ -14,4 +12,8 @@ export const validateAuth = yup.object().shape({
    .required('required'),
    password: yup.string()
    .required('required'),
+});
+
+export const validateStatus = yup.object().shape({
+   status: yup.string().min(5, 'too short').required('status not done')
 });

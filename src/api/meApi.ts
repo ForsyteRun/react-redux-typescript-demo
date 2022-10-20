@@ -63,7 +63,7 @@ export const meAPI = {
    //load avatar of me
    setAvatar: async (url: string) => {
      try {
-       const res = await instanceMock.put<LoadDataProfile>("myProfile/1", {
+       const res = await instance.put<LoadDataProfile>("status/1", {
          image: url,
        });
        return res.data.image;

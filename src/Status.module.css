@@ -13,9 +13,6 @@
    margin-bottom: 20px;
 }
 
-
-/* activeBorder, :hover, :focus {
-      outline: 0;
-      outline-offset: 0;
-      border: 1px solid red; 
-  } */
+.validateText {
+   color: rgba(153, 153, 153, 0.4);
+}
