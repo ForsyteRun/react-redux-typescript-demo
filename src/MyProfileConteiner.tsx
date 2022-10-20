@@ -34,7 +34,7 @@ class MyProfileConteiner extends Component<MSTPType & DispatchPropsType & OwnTyp
     return (
       <div>
         <StatusConteiner  />
-        {/* <MyProfile {...this.props}/> */}
+        <MyProfile {...this.props}/>
       </div>
     )
   }

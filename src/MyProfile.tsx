@@ -1,4 +1,3 @@
-import cn from 'classnames';
 import { FC, useEffect, useState } from "react";
 import editLogo from './img/edit.png';
 import photo from './img/smile.jpg';
@@ -34,18 +33,18 @@ const MyProfile: FC<PropsType> = (props) => {
       return <Preloader />
    }
    return (
-      <div className={cn(style.conteiner)}>
-         <div className={cn(style.logoConteiner)}>
+      <div className={style.conteiner}>
+         <div className={style.logoConteiner}>
             <img src={props.imageProfile
                ? props.imageProfile
-               : photo} alt='ava' style={{width: '200px'}}/>
-            <span className={cn(style.editLogo)} onClick={() => setEditLogoForm(!editLogoForm)} >
+               : photo} alt='ava'/>
+            <span className={style.editLogo} onClick={() => setEditLogoForm(!editLogoForm)} >
                <img src={editLogo} alt='noAva'/>
             </span>
-            <MyProfileAvaForm {...props}/>
+            {/* <MyProfileAvaForm {...props}/> */}
          </div>
-         <div className={cn(style.rightBlock)}>
-            <ProfileHOCForm {...props}/>
+         <div className={style.rightBlock}>
+            {/* <ProfileHOCForm {...props}/> */}
          </div>
       </div>
    )
