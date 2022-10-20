@@ -1,53 +1,47 @@
-import { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import editLogo from './img/edit.png';
 import photo from './img/smile.jpg';
-import style from './MyProfile.module.css';
+import s from './MyProfile.module.css';
 import MyProfileAvaForm from "./MyProfileAvaForm";
 import Preloader from "./Preloader";
-import ProfileHOCForm from "./ProfileForm";
+import MyProfileHOCForm from "./MyProfileForm";
 import { ProfileType } from "./types/types";
 
 type PropsType = {
    imageProfile: string | null
    isLoading: boolean
-   setImageProfileThunk: (imageUrl: any) => void
-   editLogoForm: Boolean
-   isAuth: boolean
+   setImageProfile: (imageUrl: any) => void
+   setProfileData: (imageUrl: ProfileType) => void
    profileData: ProfileType
-   getImageProfile: () => void
-   getProfileData: () => void
-   getHeaderThunkCreater: () => void
-
 };
 
-
-const MyProfile: FC<PropsType> = (props) => {
-
-  const [editLogoForm, setEditLogoForm] = useState(false);
+const MyProfile: FC<PropsType> = React.memo((props) => {
+   const{imageProfile, isLoading, setImageProfile, profileData, setProfileData}=props
+   const [editLogoForm, setEditLogoForm] = useState<boolean>(false);
 
    useEffect(() => {
       setEditLogoForm(false)
-   }, [props.imageProfile])
+   }, [imageProfile])
 
-   if (props.isLoading) {
+   if (isLoading) {
       return <Preloader />
    }
    return (
-      <div className={style.conteiner}>
-         <div className={style.logoConteiner}>
-            <img src={props.imageProfile
-               ? props.imageProfile
+      <div className={s.conteiner}>
+         <div className={s.logoConteiner}>
+            <img src={imageProfile
+               ? imageProfile
                : photo} alt='ava'/>
-            <span className={style.editLogo} onClick={() => setEditLogoForm(!editLogoForm)} >
+            <span className={s.editLogo} onClick={() => setEditLogoForm(!editLogoForm)} >
                <img src={editLogo} alt='noAva'/>
             </span>
-            {/* <MyProfileAvaForm {...props}/> */}
+            <MyProfileAvaForm setImageProfile={setImageProfile} editLogoForm={editLogoForm} imageUrl={profileData.image}/>
          </div>
-         <div className={style.rightBlock}>
-            {/* <ProfileHOCForm {...props}/> */}
+         <div className={s.rightBlock}>
+            <MyProfileHOCForm setProfileData={setProfileData} profileData={profileData}/> 
          </div>
       </div>
    )
-}
+});
 
 export default MyProfile;

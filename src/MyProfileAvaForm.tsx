@@ -1,18 +1,19 @@
 import { Field, Form, FormikProps, FormikValues, withFormik } from 'formik';
 import React, { FC } from 'react';
-import { setImageProfileThunk } from "./redux/myProfileReducer";
+import { setImageProfile } from "./redux/myProfileReducer";
 import s from './MyProfileAvaForm.module.css'
 
 type FormValuesType = {
-   setImageProfileThunk: (imageUrl: string) => void
+   setImageProfile: (imageUrl: string) => void
    editLogoForm: Boolean
+   imageUrl: string | null
 }
 
-const MyProfileAvaForm: FC<FormikProps<FormValuesType>&FormValuesType> =React.memo((props) => {
+const MyProfileAvaForm: FC<FormikProps<FormValuesType>&FormValuesType> =React.memo(({editLogoForm}) => {
 
    return (
       <div>
-         {props.editLogoForm &&     
+         {editLogoForm &&     
             <Form>
                   <Field type="text" name="imageUrl" placeholder="Enter Url" className={s.block}>
                   </Field>
@@ -25,13 +26,11 @@ const MyProfileAvaForm: FC<FormikProps<FormValuesType>&FormValuesType> =React.me
 
 const MyProfileAva = withFormik<FormValuesType, FormikValues>({
       mapPropsToValues: (props) => ({
-         editLogoForm: props.editLogoForm
+         editLogoForm: props.editLogoForm,
+         imageUrl: ''
        }),
- 
-   handleSubmit: (values, { resetForm }) => {
-      setImageProfileThunk(values.imageUrl)
-      resetForm()
-      console.log('submit MyProfileAva');
+   handleSubmit: (values: any, props: any) => {
+      props.props.setImageProfile(values.imageUrl)    
    }, 
    enableReinitialize: true
  })(MyProfileAvaForm);

@@ -1,4 +1,3 @@
-import { FormikValues } from 'formik';
 import { instance, instanceMock, ResultCodeEnum, samuraiInstance } from "./api";
 
 type AuthMe = {
@@ -75,7 +74,7 @@ export const meAPI = {
    //load initial avatar of me
    getAvatar: async () => {
      try {
-       const res = await instanceMock.get<LoadDataProfile>("myProfile/1");
+       const res = await instance.get<LoadDataProfile>("myProfile/1");
        return res.data.image;
      } catch (error) {
        throw new Error("Error in getAvatar:" + error);

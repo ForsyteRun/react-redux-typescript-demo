@@ -10,7 +10,6 @@ const initialState = {
       id: 1,
       image: ''
       } as ProfileType,
-   editLogoForm: false,
    status: 'start'
 };
 
@@ -63,8 +62,11 @@ export const updateStatusThunkCreater =
     }
   };
 
-export const setImageProfileThunk = (url: string) => async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
+export const setImageProfile = (url: string) => async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
+   
    try {
+      debugger;
+      
       const data = await meAPI.setAvatar(url)
       dispatch(actions.setImageProfile(data))
       }
@@ -75,6 +77,7 @@ export const setImageProfileThunk = (url: string) => async (dispatch: Dispatch<A
 
 export const getImageProfile = () => async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
    try {
+      debugger
       const data = await meAPI.getAvatar()
       dispatch(actions.setImageProfile(data))
       }
@@ -93,7 +96,7 @@ export const getProfileData = () => async (dispatch: Dispatch<Actions>, getState
    }
 };
 
-export const upLoadProfileData = (url: ProfileType) => async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
+export const setProfileData = (url: ProfileType) => async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
    try {
       // const data = await meAPI.
       // dispatch(actions.setImageProfile(data))

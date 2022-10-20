@@ -1,24 +1,22 @@
-import { Component } from "react";
+import { PureComponent } from "react";
 import { connect } from "react-redux";
 import MyProfile from "./MyProfile";
 import { getHeaderThunkCreater } from './redux/authReduser';
-import { getImageProfile, getProfileData, setImageProfileThunk, upLoadProfileData } from './redux/myProfileReducer';
+import { getImageProfile, getProfileData, setImageProfile, setProfileData } from './redux/myProfileReducer';
 import { AppState } from "./redux/redux";
 import StatusConteiner from "./StatusConteiner";
+import { ProfileType } from "./types/types";
 
 type MSTPType = ReturnType<typeof mapStateToProps>
 
 type DispatchPropsType = {
   getImageProfile: () => void
   getProfileData: () => void
-  getHeaderThunkCreater: () => void
+  setImageProfile: (imageUrl: string) => void
+  setProfileData: (imageUrl: ProfileType) => void
 };
-
-type OwnType = {
-  setImageProfileThunk: (imageUrl: string) => void
-};
-
-class MyProfileConteiner extends Component<MSTPType & DispatchPropsType & OwnType> {
+class MyProfileConteiner extends PureComponent<MSTPType & DispatchPropsType> {
+  
 //   if (!isAuth) {
 //     return <Navigate to='/auth' />
 //  } else  {
@@ -26,11 +24,13 @@ class MyProfileConteiner extends Component<MSTPType & DispatchPropsType & OwnTyp
 //  }
 
   componentDidMount(){
-      this.props.getImageProfile();
-      this.props.getProfileData();
+      getImageProfile();
+      getProfileData();
+      //getHeaderThunkCreater();
     };  
-
+  
   render() {   
+    
     return (
       <div>
         <StatusConteiner  />
@@ -46,10 +46,9 @@ const mapStateToProps = (state: AppState) => {
     imageProfile: state.myProfile.profileInfo.image,
     isLoading: state.users.isLoading,
     profileData: state.profile.profileInfo,
-    editLogoForm: state.myProfile.editLogoForm
   }
 };
 
 export default connect(mapStateToProps, 
-  {getHeaderThunkCreater, setImageProfileThunk, getImageProfile, getProfileData, upLoadProfileData})
+  {setImageProfile, getImageProfile, getProfileData, setProfileData})
   (MyProfileConteiner);
