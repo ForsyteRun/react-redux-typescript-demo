@@ -6,18 +6,20 @@ import { ProfileType } from "./types/types";
 
 type PropsTypes = {
    setProfileData: (imageUrl: ProfileType) => void
-   profileData: ProfileType
+   lookinForJob: string | null
+   lookinForJobDiiscription: string | null
+   fullName: string | null
 };
 
-const MyProfileForm: FC<PropsTypes&FormikProps<ProfileType>>= React.memo((props) => {
-   
+const MyProfileForm: FC<PropsTypes&FormikProps<PropsTypes>>= React.memo((props) => {
    const [editModeForm, setEditModeForm] = useState<boolean>(false)
-  
-   const onSubmitForm = (values:ProfileType) => {
-      setProfileData(values)
-      setEditModeForm(false)
-      console.log(values);
-   };
+   console.log(props.values);
+   
+   // const onSubmitForm = (values:ProfileType) => {
+   //    props.setProfileData(values)
+   //    setEditModeForm(false)
+   //    console.log(values);
+   // };
 
    return (
       <div>       
@@ -31,25 +33,25 @@ const MyProfileForm: FC<PropsTypes&FormikProps<ProfileType>>= React.memo((props)
                         </div>                          
             })}
             {editModeForm 
-            ?<button type="submit" onClick={()=>onSubmitForm}>Submit</button>
-            :<button type="submit" onClick={()=>setEditModeForm(true)}>Edit info</button>}
+            ?<button type="button" onClick={()=>setEditModeForm(false)}>Submit</button>
+            :<button type='submit' onClick={()=>setEditModeForm(true) }>Edit info</button>}
          </Form>   
       </div>
    )
 });
  
 const MyProfileHOCForm = withFormik<FormikValues, ProfileType>({
-   //@ts-ignore
-   mapPropsToValues: (props: ProfileType) => ({  
+   mapPropsToValues: (props: any) => ({  
       lookinForJob: props.lookinForJob,
-      lookinForJobDiiscription: props.lookinForJobDiiscription,
-      fullName: props.fullName,
-      image: props.image
+      lookinForJobDiiscription:props.lookinForJobDiiscription,
+      fullName: props.fullName,    
      }),
-   handleSubmit: (values) => {
-    console.log(values);
-    
-   }})(MyProfileForm);
+   handleSubmit: (values, props) => {
+      props.props.setProfileData(values)
+      props.resetForm()
+   }, 
+   enableReinitialize: true,
+})(MyProfileForm);
 
 export default MyProfileHOCForm;
 

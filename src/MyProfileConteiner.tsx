@@ -24,8 +24,8 @@ class MyProfileConteiner extends PureComponent<MSTPType & DispatchPropsType> {
 //  }
 
   componentDidMount(){
-      getImageProfile();
-      getProfileData();
+      this.props.getImageProfile();
+      this.props.getProfileData();
       //getHeaderThunkCreater();
     };  
   
@@ -43,9 +43,9 @@ class MyProfileConteiner extends PureComponent<MSTPType & DispatchPropsType> {
 const mapStateToProps = (state: AppState) => {
   return{
     isAuth: state.auth.isAuth,
-    imageProfile: state.myProfile.profileInfo.image,
+    avatar: state.myProfile.avatar,
     isLoading: state.users.isLoading,
-    profileData: state.profile.profileInfo,
+    profileData: state.myProfile.profileInfo,
   }
 };
 

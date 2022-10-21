@@ -11,7 +11,5 @@ export type UserData = {
  export type ProfileType = {
   lookinForJob: string | null
   lookinForJobDiiscription: string | null
-  fullName: string | null
-  //id: number
-  image: string | null
+  fullName: string | null 
 };

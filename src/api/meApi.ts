@@ -1,3 +1,4 @@
+import { ProfileType } from "../types/types";
 import { instance, instanceMock, ResultCodeEnum, samuraiInstance } from "./api";
 
 type AuthMe = {
@@ -14,15 +15,12 @@ type AuthMe = {
    id: number;
    status: string;
  };
- 
- type LoadDataProfile = {
-   lookinForJob: string;
-   lookinForJobDiiscription: string;
-   fullName: string;
-   id: number;
-   image: string;
- };
- 
+
+ type AvatarType = {
+  image: string 
+  id: number
+ }
+  
 export const meAPI = {
 
    //load autorization data of me
@@ -62,7 +60,8 @@ export const meAPI = {
    //load avatar of me
    setAvatar: async (url: string) => {
      try {
-       const res = await instance.put<LoadDataProfile>("status/1", {
+      debugger
+       const res = await instance.put<AvatarType>('myProfile/2', {
          image: url,
        });
        return res.data.image;
@@ -74,7 +73,7 @@ export const meAPI = {
    //load initial avatar of me
    getAvatar: async () => {
      try {
-       const res = await instance.get<LoadDataProfile>("myProfile/1");
+       const res = await instance.get<AvatarType>('myProfile/2');
        return res.data.image;
      } catch (error) {
        throw new Error("Error in getAvatar:" + error);
@@ -84,10 +83,19 @@ export const meAPI = {
    // data of me
    getProfileInfo: async () => {
     try {
-      const res = await instanceMock.get<LoadDataProfile>('myProfile/1')
+      const res = await instance.get<ProfileType>('myProfile/1')
       return res.data
     } catch (error) {
       throw new Error('Error in getProfileInfo:' + error);
+    }
+  },
+
+   setProfileInfo: async (data: ProfileType) => {
+    try {    
+      const res = await instance.put<ProfileType>('myProfile/1', data)
+      return res.data
+    } catch (error) {
+      throw new Error('Error in setProfileInfo:' + error);
     }
   },
  };

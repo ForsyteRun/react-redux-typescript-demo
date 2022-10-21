@@ -8,7 +8,7 @@ import MyProfileHOCForm from "./MyProfileForm";
 import { ProfileType } from "./types/types";
 
 type PropsType = {
-   imageProfile: string | null
+   avatar: string | null
    isLoading: boolean
    setImageProfile: (imageUrl: any) => void
    setProfileData: (imageUrl: ProfileType) => void
@@ -16,29 +16,32 @@ type PropsType = {
 };
 
 const MyProfile: FC<PropsType> = React.memo((props) => {
-   const{imageProfile, isLoading, setImageProfile, profileData, setProfileData}=props
+
+   const{avatar, isLoading, setImageProfile, profileData, setProfileData}=props
    const [editLogoForm, setEditLogoForm] = useState<boolean>(false);
 
    useEffect(() => {
       setEditLogoForm(false)
-   }, [imageProfile])
+   }, [avatar])
 
    if (isLoading) {
       return <Preloader />
    }
+    
    return (
       <div className={s.conteiner}>
          <div className={s.logoConteiner}>
-            <img src={imageProfile
-               ? imageProfile
+            <img src={avatar
+               ? avatar
                : photo} alt='ava'/>
             <span className={s.editLogo} onClick={() => setEditLogoForm(!editLogoForm)} >
                <img src={editLogo} alt='noAva'/>
             </span>
-            <MyProfileAvaForm setImageProfile={setImageProfile} editLogoForm={editLogoForm} imageUrl={profileData.image}/>
+            <MyProfileAvaForm setImageProfile={setImageProfile} editLogoForm={editLogoForm} avatar={avatar}/>
          </div>
          <div className={s.rightBlock}>
-            <MyProfileHOCForm setProfileData={setProfileData} profileData={profileData}/> 
+            <MyProfileHOCForm setProfileData={setProfileData} fullName={profileData.fullName}
+            lookinForJobDiiscription={profileData.lookinForJobDiiscription} lookinForJob={profileData.lookinForJob}/> 
          </div>
       </div>
    )

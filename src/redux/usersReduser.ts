@@ -1,7 +1,5 @@
-import { FormikValues } from 'formik';
 import { Dispatch } from "redux";
 import { usersApi } from '../api/getUsers';
-import { meAPI } from '../api/meApi';
 import { followUnFollowHelper } from "../common/helperReduser";
 import { ActionsType, UserData } from '../types/types';
 ;

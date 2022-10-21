@@ -8,8 +8,8 @@ const initialState = {
       lookinForJobDiiscription: null,
       fullName: null,
       id: 1,
-      image: ''
       } as ProfileType,
+   avatar: '',
    status: 'start'
 };
 
@@ -19,7 +19,10 @@ type Actions = ActionsType<typeof actions>
 export const myProfileReducer = (state: InitialState = initialState, action: Actions): InitialState => {
    switch (action.type) {
       case 'typescript/SET_IMAGE_PROFILE':
-         return  Object.assign({}, state, {image: action.url});   
+         return {
+            ...state, 
+            avatar: action.avatar
+         };  
       case 'minin/statusReduser/GET_STATUS':
          return {
             ...state,
@@ -30,6 +33,8 @@ export const myProfileReducer = (state: InitialState = initialState, action: Act
             ...state,
             status: action.status,
          };
+      case "typescript/SET_DATA_PROFILE":
+         return Object.assign({}, state, {profileInfo: action.data} )
       default:
       return state
    }
@@ -38,7 +43,8 @@ export const myProfileReducer = (state: InitialState = initialState, action: Act
 export const actions = {
    getStatus: (status: string) => ({type: 'minin/statusReduser/GET_STATUS', status}as const),
    updateStatus: (status: string) => ({type: 'minin/statusReduser/UPDATE_STATUS', status}as const),
-   setImageProfile: (url: string) => ({type: 'typescript/SET_IMAGE_PROFILE', url} as const),
+   setImageProfile: (avatar: string) => ({type: 'typescript/SET_IMAGE_PROFILE', avatar} as const),
+   setDataProfile: (data: ProfileType) => ({type: 'typescript/SET_DATA_PROFILE', data} as const)
 };
 
 export const getStatusThunkCreater =
@@ -63,46 +69,42 @@ export const updateStatusThunkCreater =
   };
 
 export const setImageProfile = (url: string) => async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
-   
    try {
-      debugger;
-      
-      const data = await meAPI.setAvatar(url)
-      dispatch(actions.setImageProfile(data))
+      const avatar = await meAPI.setAvatar(url)
+      dispatch(actions.setImageProfile(avatar))
       }
    catch (error) {
-      throw new Error('Error in getHeaderThunkCreater' + error)
+      throw new Error('Error in setImageProfile' + error)
    }
 };
 
 export const getImageProfile = () => async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
    try {
-      debugger
-      const data = await meAPI.getAvatar()
-      dispatch(actions.setImageProfile(data))
+      const avatar = await meAPI.getAvatar()
+      dispatch(actions.setImageProfile(avatar))
       }
    catch (error) {
-      throw new Error('Error in getHeaderThunkCreater' + error)
+      throw new Error('Error in getImageProfile' + error)
    }
 };
 
 export const getProfileData = () => async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
    try {
-      // const data = await meAPI.
-      // dispatch(actions.setImageProfile(data))
+      const res = await meAPI.getProfileInfo()
+      dispatch(actions.setDataProfile(res))
       }
    catch (error) {
-      throw new Error('Error in getHeaderThunkCreater' + error)
+      throw new Error('Error in getProfileData' + error)
    }
 };
 
-export const setProfileData = (url: ProfileType) => async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
+export const setProfileData = (data: ProfileType) => async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
    try {
-      // const data = await meAPI.
-      // dispatch(actions.setImageProfile(data))
+      const res = await meAPI.setProfileInfo(data)
+      dispatch(actions.setDataProfile(res))
       }
    catch (error) {
-      throw new Error('Error in getHeaderThunkCreater' + error)
+      throw new Error('Error in setProfileData' + error)
    }
 };
 
