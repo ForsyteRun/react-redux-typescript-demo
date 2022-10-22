@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { PureComponent } from "react";
 import {connect} from 'react-redux';
 import Header from "./Header";
 import { outAuthThunkCreater } from "./redux/authReduser";
@@ -13,7 +13,7 @@ type MapDispatchToPropsType = {
 
 type PropsType = MapStateToPropsType & MapDispatchToPropsType;
 
-class HeaderConteiner extends Component<PropsType>{
+class HeaderConteiner extends PureComponent<PropsType>{
 
  render() {
      return (

@@ -1,22 +1,22 @@
 import React, { FC } from "react";
 import { NavLink } from "react-router-dom";
-import style from './Header.module.css';
+import s from './Header.module.css';
 
 type PropsType = {
   isAuth: boolean
   outAuthThunkCreater: () => void
 }
 
-const Header: FC<PropsType> = React.memo ((props) => {
+const Header: FC<PropsType> = React.memo (({isAuth, outAuthThunkCreater}) => {
 
   const redirAuth = () => {
-    props.outAuthThunkCreater();
-  }
+    outAuthThunkCreater();
+  };
 
   return (
-    <div className={style.conteiner}>
-      <span className={style.login}>
-        {props.isAuth 
+    <div className={s.conteiner}>
+      <span className={s.login}>
+        {isAuth 
         ? <NavLink to={'/auth'}> <span onClick={redirAuth}>LogOut</span> </NavLink> 
         : <NavLink to={'/auth'}> <span>Login</span></NavLink>}
       </span>

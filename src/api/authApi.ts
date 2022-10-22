@@ -34,7 +34,7 @@ export const authAPI = {
       }
     },
    //log-in me
-   enterAuth: async (email: string | null, password: string | null, rememberMe: boolean, captcha: string | null) => {
+   enterAuth: async (email: string | null, password: number | string | null, rememberMe: boolean, captcha: string | null) => {
      try {
        const res = await samuraiInstance.post<AuthMe>("auth/login", {email, password, rememberMe, captcha},
          { withCredentials: true }
@@ -48,7 +48,8 @@ export const authAPI = {
    //log-out me
    outAuth: async () => {
      try {
-       const res = await samuraiInstance.delete<AuthMe>("auth/login");
+      debugger
+       const res = await samuraiInstance.delete<AuthAPI>("auth/login");
        return res.data;
      } catch (error) {
        throw new Error("Error in outAuth:" + error)

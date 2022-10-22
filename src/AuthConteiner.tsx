@@ -1,17 +1,20 @@
-import { Component } from "react";
+import { PureComponent } from "react";
 import { connect } from 'react-redux';
-import Auth from "./Auth";
+import Auth, { PropsType } from "./Auth";
 import { enterAuthThunkCreater, getAuthThunkCreater } from "./redux/authReduser";
 import { AppState } from "./redux/redux";
 
-type MSTP = ReturnType<typeof mapStateToProps>
+type MSTP = PropsType&OwnProps;
 
 type MapDSTP = {
-  enterAuthThunkCreater: (values: MSTP, setSubmitting: (isSubmitting: boolean) => void) => void
+  enterAuthThunkCreater: (values: PropsType) => void;
   getAuthThunkCreater: () => void
 };
 
-class AuthConteiner extends Component<MSTP&MapDSTP> {
+type OwnProps = {
+  isAuth: boolean
+};
+class AuthConteiner extends PureComponent<MSTP&MapDSTP&OwnProps> {
 
   componentDidMount(){
     this.props.getAuthThunkCreater()
@@ -19,8 +22,8 @@ class AuthConteiner extends Component<MSTP&MapDSTP> {
 
   render(){
     return(
-      //@ts-ignore
-      <div><Auth {...this.props}/>
+      <div>     
+        <Auth {...this.props}/>
       </div>
     )
   }

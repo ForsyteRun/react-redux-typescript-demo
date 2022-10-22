@@ -1,9 +1,9 @@
-import { ResultCodeEnum} from './../api/api';
 import { Dispatch } from "redux";
-import { ActionsType, CaptchaType } from '../types/types';
-import { meAPI } from '../api/meApi';
-import { authAPI, AuthMe } from '../api/authApi';
+import { authAPI } from '../api/authApi';
 import { securityApi } from '../api/securityApi';
+import { PropsType } from '../Auth';
+import { ActionsType } from '../types/types';
+import { ResultCodeEnum } from './../api/api';
 
 const initialState = {
    email: null as string | null,
@@ -38,6 +38,7 @@ export default authReduser;
 
 const actions = {
    authAC: (email: string | null, login: string | null, id: number | null, isAuth: boolean) => {
+      debugger;
       return {type: 'minin/authReduser/SET_AUTH', email, login, id, isAuth} as const
    },
    getCaptcha: (url: string | null) => {
@@ -47,29 +48,28 @@ const actions = {
 
 export const getAuthThunkCreater = () => async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
    try {
-      debugger
       const res = await authAPI.authMe();
       if (res.resultCode === ResultCodeEnum.Success) {
          const{email, login, id} = res.data;
          dispatch(actions.authAC(email, login, id, true))
+      }else {
+         dispatch(actions.authAC(null, null, null, false))
       }
-    else dispatch(actions.authAC(null, null, null, false))
    } catch (error) {
-      throw new Error('Error in getHeaderThunkCreater' + error)
+      throw new Error('Error in getAuthThunkCreater' + error)
    }
 };
 
-export const enterAuthThunkCreater = (values: CaptchaType, setSubmitting: (isSubmitting: boolean) => void) => 
+export const enterAuthThunkCreater = (values: PropsType) => 
 async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
    try {
-      debugger
       let res = await authAPI.enterAuth(values.email, values.login, values.rememberMe, values.captcha);    
       if (res.resultCode === ResultCodeEnum.Success) {
-         getAuthThunkCreater()
-         //@ts-ignore
-        setSubmitting(false);
+         //todo: find out how dispatch thunk
+         dispatch(actions.authAC(null, null, null, false))
+         dispatch(getAuthThunkCreater() as any)
       } else {
-         getCaptchaThunk();
+         dispatch(getCaptchaThunk() as any)
       } 
    } catch (error) {
       throw new Error('Error in enterAuthThunkCreater' + error); 
@@ -78,9 +78,11 @@ async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
 
 export const outAuthThunkCreater = () => 
 async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
+   debugger;
    try {
       await authAPI.outAuth()
-      dispatch(actions.authAC(null, null, null, false))   
+      dispatch(actions.authAC(null, null, null, false))
+     
    } catch (error) {
       throw new Error('Error in outAuthThunkCreater' + error);
    }

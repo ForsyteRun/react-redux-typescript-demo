@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import { NavLink } from "react-router-dom";
 import style from './Users.module.css';
 import avatar from './../src/img/smile.jpg';
@@ -12,7 +12,7 @@ export type OwnType = {
   getUnFollowThunkCreater: (userId: number) => void
 }
 
-const FollowUnFollow: FC<OwnType> = (props) => {
+const FollowUnFollow: FC<OwnType> = React.memo((props) => {
   
   return ( 
         <div className = {style.content}>
@@ -20,6 +20,7 @@ const FollowUnFollow: FC<OwnType> = (props) => {
               <NavLink to = {'/profile/' + props.el.id}>
                 <img src={props.el.photo || avatar} alt = 'avatar' className = {style.img}/>
               </NavLink>
+              <span>{props.el.name}</span>
             </div>
             <div>
               {props.el.isFollow 
@@ -32,6 +33,6 @@ const FollowUnFollow: FC<OwnType> = (props) => {
             </div>
         </div>
         ) 
-      }
+      });
 
 export default FollowUnFollow;

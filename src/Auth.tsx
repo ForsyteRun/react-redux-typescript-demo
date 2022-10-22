@@ -1,12 +1,11 @@
 import { Field, Form, Formik } from "formik";
-import { FC } from "react";
+import React, { FC } from "react";
 import { Navigate } from "react-router-dom";
 import s from "./Auth.module.css";
 import { validateAuth } from "./formik/validateSchema";
 import cn from "classnames";
-import { enterAuthThunkCreater } from "./redux/authReduser";
 
-type PropsType = {
+export type PropsType = {
   login: string | number | null;
   email: string | null;
   rememberMe: boolean;
@@ -18,15 +17,15 @@ type DispatchType = {
   enterAuthThunkCreater: (values: PropsType) => void;
 };
 
-const Auth: FC<PropsType & DispatchType> = (props) => {
+const Auth: FC<PropsType & DispatchType> = React.memo((props) => {
  
-  if (props.isAuth) return <Navigate to="/myProfile" />; 
+  if (props.isAuth) return <Navigate to='/myProfile' />; 
  
   const initialValues: PropsType = {
-    email: "",
-    login: "",
+    email: '',
+    login: '',
     rememberMe: false,
-    captcha: "",
+    captcha: '',
   };
 
   const onSubmit = (values: PropsType) => {
@@ -65,6 +64,6 @@ const Auth: FC<PropsType & DispatchType> = (props) => {
       )}
     </Formik>
   );
-};
+});
 
 export default Auth;
