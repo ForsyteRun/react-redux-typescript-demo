@@ -1,3 +1,8 @@
 .block {
    max-width: 100px;
 }
+
+.error {
+   font-size: 15px;
+   color: red;
+}

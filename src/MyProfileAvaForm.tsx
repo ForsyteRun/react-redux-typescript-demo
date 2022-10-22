@@ -1,6 +1,8 @@
 import { Field, Form, FormikProps, FormikValues, withFormik } from "formik";
 import React, { FC } from "react";
+import { validateAvatarForm } from "./formik/validateSchema";
 import s from "./MyProfileAvaForm.module.css";
+import cn from 'classnames';
 
 type FormValuesType = {
   setImageProfile: (imageUrl: string) => void;
@@ -9,7 +11,9 @@ type FormValuesType = {
 };
 
 const MyProfileAvaForm: FC<FormikProps<FormValuesType> & FormValuesType> =
-  React.memo(({ editLogoForm }) => {
+  React.memo((props) => {
+    const{editLogoForm, errors} = props
+    
     return (
       <div>
         {editLogoForm && (
@@ -19,8 +23,9 @@ const MyProfileAvaForm: FC<FormikProps<FormValuesType> & FormValuesType> =
               name="avatar"
               placeholder="Enter Url"
               className={s.block}
-            ></Field>
-            <button type="submit">Submit</button>
+            />      
+            {errors.avatar && <div className={cn(s.error)}>{errors.avatar}</div>}    
+            <button type="submit" >Submit</button>
           </Form>
         )}
       </div>
@@ -32,6 +37,7 @@ const MyProfileAva = withFormik<FormValuesType, FormikValues>({
     editLogoForm: props.editLogoForm,
     avatar: '',
   }),
+  validationSchema: validateAvatarForm,
   handleSubmit: (values: FormikValues, props: any) => {
     props.props.setImageProfile(values.avatar);
   },

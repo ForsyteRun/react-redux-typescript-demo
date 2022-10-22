@@ -18,3 +18,8 @@
    font-weight: normal;
    margin-left: 10px;
 }
+
+.error {
+   font-size: 10px;
+   color: red;
+}

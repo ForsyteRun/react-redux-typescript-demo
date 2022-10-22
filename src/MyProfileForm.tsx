@@ -1,8 +1,9 @@
 import { Field, Form, FormikProps, FormikValues, withFormik } from 'formik';
 import React, { FC, useState } from "react";
-import style from './ProfileForm.module.css';
-import { setProfileData } from './redux/myProfileReducer';
+import { validateProfileData } from './formik/validateSchema';
+import s from './ProfileForm.module.css';
 import { ProfileType } from "./types/types";
+import cn from 'classnames';
 
 type PropsTypes = {
    setProfileData: (imageUrl: ProfileType) => void
@@ -12,24 +13,22 @@ type PropsTypes = {
 };
 
 const MyProfileForm: FC<PropsTypes&FormikProps<PropsTypes>>= React.memo((props) => {
+   const{values, errors} = props;
    const [editModeForm, setEditModeForm] = useState<boolean>(false)
-   console.log(props.values);
-   
-   // const onSubmitForm = (values:ProfileType) => {
-   //    props.setProfileData(values)
-   //    setEditModeForm(false)
-   //    console.log(values);
-   // };
 
+   console.log(props);
+   
    return (
       <div>       
-         <Form className={style.conteiner}>  
-            {Object.keys(props.values).map(el => {
+         <Form className={s.conteiner}>  
+            {Object.keys(values).map(el => {
                return <div>{el}:
                            {editModeForm 
-                           ? <Field name={el} keys={el} className={style.inputForm}/> 
+                           ? <Field name={el} keys={el} className={s.inputForm}/> 
                            //@ts-ignore
-                           :<span className={style.text}>{props.values[el]}</span>                           }
+                           :<span className={s.text}>{values[el]}</span>}
+                           { //@ts-ignore
+                           errors[el] && <div className={cn(s.error)}>{errors[el]}</div>}
                         </div>                          
             })}
             {editModeForm 
@@ -46,6 +45,7 @@ const MyProfileHOCForm = withFormik<FormikValues, ProfileType>({
       lookinForJobDiiscription:props.lookinForJobDiiscription,
       fullName: props.fullName,    
      }),
+   validationSchema: validateProfileData,
    handleSubmit: (values, props) => {
       props.props.setProfileData(values)
       props.resetForm()
