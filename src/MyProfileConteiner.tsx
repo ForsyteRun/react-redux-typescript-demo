@@ -1,7 +1,7 @@
 import { PureComponent } from "react";
 import { connect } from "react-redux";
 import MyProfile from "./MyProfile";
-import { getHeaderThunkCreater } from './redux/authReduser';
+import { getAuthThunkCreater } from './redux/authReduser';
 import { getImageProfile, getProfileData, setImageProfile, setProfileData } from './redux/myProfileReducer';
 import { AppState } from "./redux/redux";
 import StatusConteiner from "./StatusConteiner";
@@ -49,6 +49,6 @@ const mapStateToProps = (state: AppState) => {
   }
 };
 
-export default connect(mapStateToProps, 
+export default connect<MSTPType, DispatchPropsType, {}, AppState>(mapStateToProps, 
   {setImageProfile, getImageProfile, getProfileData, setProfileData})
   (MyProfileConteiner);

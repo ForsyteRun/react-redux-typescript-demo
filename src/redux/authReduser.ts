@@ -1,8 +1,8 @@
 import { ResultCodeEnum} from './../api/api';
 import { Dispatch } from "redux";
-import { ActionsType } from '../types/types';
+import { ActionsType, CaptchaType } from '../types/types';
 import { meAPI } from '../api/meApi';
-import { authAPI } from '../api/authApi';
+import { authAPI, AuthMe } from '../api/authApi';
 import { securityApi } from '../api/securityApi';
 
 const initialState = {
@@ -45,11 +45,12 @@ const actions = {
    },
 };
 
-export const getHeaderThunkCreater = () => async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
+export const getAuthThunkCreater = () => async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
    try {
-      const res = await meAPI.authMe();
-      if (res.data.resultCode === ResultCodeEnum.Success) {
-         const { email, login, id } = res.data.data
+      debugger
+      const res = await authAPI.authMe();
+      if (res.resultCode === ResultCodeEnum.Success) {
+         const{email, login, id} = res.data;
          dispatch(actions.authAC(email, login, id, true))
       }
     else dispatch(actions.authAC(null, null, null, false))
@@ -58,19 +59,13 @@ export const getHeaderThunkCreater = () => async (dispatch: Dispatch<Actions>, g
    }
 };
 
-type CaptchaType = {
-   login: string | null,
-   email: string | null,
-   rememberMe: boolean,
-   captcha: string | null
-};
-
 export const enterAuthThunkCreater = (values: CaptchaType, setSubmitting: (isSubmitting: boolean) => void) => 
 async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
    try {
-      let res = await authAPI.enterAuth(values.login, values.email, values.rememberMe, values.captcha);
-      if (res) {
-        getHeaderThunkCreater()
+      debugger
+      let res = await authAPI.enterAuth(values.email, values.login, values.rememberMe, values.captcha);    
+      if (res.resultCode === ResultCodeEnum.Success) {
+         getAuthThunkCreater()
          //@ts-ignore
         setSubmitting(false);
       } else {

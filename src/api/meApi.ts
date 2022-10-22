@@ -1,16 +1,6 @@
 import { ProfileType } from "../types/types";
 import { instance, instanceMock, ResultCodeEnum, samuraiInstance } from "./api";
 
-type AuthMe = {
-   data: {
-     id: number;
-     email: string;
-     login: string;
-   };
-   resultCode: ResultCodeEnum;
-   messages: Array<string>;
- };
- 
  type Status = {
    id: number;
    status: string;
@@ -22,18 +12,6 @@ type AuthMe = {
  }
   
 export const meAPI = {
-
-   //load autorization data of me
-   authMe: async () => {
-     try {
-       const res = await samuraiInstance.get<AuthMe>("auth/me", {
-         withCredentials: true,
-       });
-         return res;
-     } catch (error) {
-       throw new Error(`Error in authMe: ${error}`);
-     }
-   },
  
    //load status me
    getStatus: async () => {

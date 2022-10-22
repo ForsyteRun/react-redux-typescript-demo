@@ -13,3 +13,10 @@ export type UserData = {
   lookinForJobDiiscription: string | null
   fullName: string | null 
 };
+
+export type CaptchaType = {
+  login: string | null,
+  email: string | null,
+  rememberMe: boolean,
+  captcha: string | null
+};

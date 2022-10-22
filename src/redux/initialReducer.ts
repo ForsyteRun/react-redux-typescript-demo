@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { ActionsType } from "../types/types";
-import { getHeaderThunkCreater } from "./authReduser";
+import { getAuthThunkCreater } from "./authReduser";
 
 const initialState = {
   isInitial: false,
@@ -34,7 +34,7 @@ const actions = {
 export const getInitialThunkCreater =
   () => async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
     try {
-      await getHeaderThunkCreater();
+      await getAuthThunkCreater();
       dispatch(actions.initialAC());
     } catch (error) {
       throw new Error("Error in getInitialThunkCreater" + error);
