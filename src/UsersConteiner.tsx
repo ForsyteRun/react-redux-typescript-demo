@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { PureComponent } from "react";
 import { connect } from "react-redux";
 import Preloader from "./Preloader";
 import { AppState } from "./redux/redux";
@@ -14,21 +14,21 @@ type MapDispatchToProps = {
   getFollowThunkCreater: (userId: number) => void;
   getUnFollowThunkCreater: (userId: number) => void
   getUsersThunkCreater: (pageSize: number, offset: number) => void;
-  getPageChangeThunkCreater: (pageSize: number, page: number, offset: number) => void;
+  getPageChangeThunkCreater: (pageSize: number, page: number, offset: number, filter: string) => void;
 };
 
-class UsersConteiner extends Component<MapStateToProps & MapDispatchToProps> {
+class UsersConteiner extends PureComponent<MapStateToProps & MapDispatchToProps> {
   componentDidMount() {
       this.props.getUsersThunkCreater(this.props.pageSize, this.props.currentPageData-1)
   };
 
-  onPageChange = (offset: number) => { 
+  onPageChange = (offset: number, filter?: string) => { 
     if(offset >2) {
-      this.props.getPageChangeThunkCreater(this.props.pageSize, offset, offset + this.props.pageSize);
+      this.props.getPageChangeThunkCreater(this.props.pageSize, offset, offset + this.props.pageSize, this.props.filterUsers);
     }else if (offset === 1){
-      this.props.getPageChangeThunkCreater(this.props.pageSize, offset, offset -1);
+      this.props.getPageChangeThunkCreater(this.props.pageSize, offset, offset -1, this.props.filterUsers);
     }else {
-      this.props.getPageChangeThunkCreater(this.props.pageSize, offset, (offset + this.props.pageSize) - 2);
+      this.props.getPageChangeThunkCreater(this.props.pageSize, offset, (offset + this.props.pageSize) - 2, this.props.filterUsers);
     }
   };
 
@@ -53,6 +53,7 @@ const mapStateToProps = (state: AppState) => {
     amountPagi: state.users.amountPagi,
     offset: state.users.offset,
     isBtnDisable: state.users.btnDisable,
+    filterUsers: state.users.filterUsers
   };
 };
 

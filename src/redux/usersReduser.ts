@@ -104,15 +104,12 @@ type DispatchType = Dispatch<Actions>;
 type StateType = () => InitialState;
 
 export const getUsersThunkCreater =
-  (pageSize: number, offset: number, filter?: string) =>
+  (pageSize: number, offset: number) =>
   async (dispatch: DispatchType, getState: StateType) => {
     try {
       dispatch(actions.toggleLoading(false));
-      const users = await usersApi.getUsers(pageSize, offset, filter);
+      const users = await usersApi.getUsers(pageSize, offset);
       dispatch(actions.setUsers(users));
-    if(filter)  {
-       dispatch(actions.filterUsers(filter))
-    }
       //dispatch(actions.totalPages(users.));
       dispatch(actions.toggleLoading(false));
     } catch (error) {
@@ -131,12 +128,15 @@ async (dispatch: DispatchType, getState: StateType) => {
 }
 
 export const getPageChangeThunkCreater =
-  (pageSize: number, pageNumber: number, offset: number) =>
+  (pageSize: number, pageNumber: number, offset: number,  filter?: string) =>
   async (dispatch: DispatchType, getState: StateType) => {
     try {
       dispatch(actions.currentPage(pageNumber));
       dispatch(actions.toggleLoading(true));
-      let res = await usersApi.getUsers(pageSize, offset);
+      let res = await usersApi.getUsers(pageSize, offset, filter);
+      if(filter)  {
+        dispatch(actions.filterUsers(filter))
+     }
       dispatch(actions.setUsers(res));
       dispatch(actions.toggleLoading(false)); 
     } catch (error) {
