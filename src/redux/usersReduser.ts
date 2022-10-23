@@ -15,10 +15,14 @@ const initialState = {
   isLoading: false,
   followingProgress: [] as Array<number>,
   btnDisable: false,
-  filterUsers: '' as string
+  filter: {
+    users: '' as string,
+    follow: false as boolean | null,
+  }
 };
 
 type InitialState = typeof initialState;
+export type FilterType = typeof initialState.filter;
 type Actions = ActionsType<typeof actions>
 
 //reduser - logic of statusPage
@@ -45,7 +49,7 @@ export const usersReduser = (
     case "minin/statusReduser/filter":
       return {
         ...state,
-        filterUsers: action.filter
+        filter: action.filter
       };
     case 'minin/statusReduser/CURRENT_PAGE':
       return {
@@ -95,7 +99,7 @@ export const actions = {
   toggleLoading: (isLoading: boolean) => ({type: 'minin/statusReduser/toggle_loading', isLoading}as const),
   isBtnDisable: (btnDisable: boolean) => ({type: 'minin/statusReduser/isBtnDisable', btnDisable}as const),
   isFollowing: (followingProgress: boolean, id: number) => ({type: 'minin/statusReduser/IS_FOLLOWING_PROGRESS', id, followingProgress} as const),
-  filterUsers: (filter: string) => ({type: 'minin/statusReduser/filter', filter} as const),
+  filterUsers: (filter: FilterType) => ({type: 'minin/statusReduser/filter', filter} as const),
 };
 
 
@@ -128,12 +132,13 @@ async (dispatch: DispatchType, getState: StateType) => {
 }
 
 export const getPageChangeThunkCreater =
-  (pageSize: number, pageNumber: number, offset: number,  filter?: string) =>
+  (pageSize: number, pageNumber: number, offset: number,  filter?: FilterType) =>
   async (dispatch: DispatchType, getState: StateType) => {
+    debugger
     try {
       dispatch(actions.currentPage(pageNumber));
       dispatch(actions.toggleLoading(true));
-      let res = await usersApi.getUsers(pageSize, offset, filter);
+      let res = await usersApi.getUsers(pageSize, offset, filter?.users, filter?.follow);
       if(filter)  {
         dispatch(actions.filterUsers(filter))
      }

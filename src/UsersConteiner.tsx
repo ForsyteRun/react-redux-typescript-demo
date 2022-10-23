@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Preloader from "./Preloader";
 import { AppState } from "./redux/redux";
 import {
+  FilterType,
   getFollowThunkCreater,
   getPageChangeThunkCreater, getUnFollowThunkCreater, getUsersThunkCreater
 } from "./redux/usersReduser";
@@ -14,7 +15,7 @@ type MapDispatchToProps = {
   getFollowThunkCreater: (userId: number) => void;
   getUnFollowThunkCreater: (userId: number) => void
   getUsersThunkCreater: (pageSize: number, offset: number) => void;
-  getPageChangeThunkCreater: (pageSize: number, page: number, offset: number, filter: string) => void;
+  getPageChangeThunkCreater: (pageSize: number, page: number, offset: number, filter: FilterType) => void;
 };
 
 class UsersConteiner extends PureComponent<MapStateToProps & MapDispatchToProps> {
@@ -53,7 +54,7 @@ const mapStateToProps = (state: AppState) => {
     amountPagi: state.users.amountPagi,
     offset: state.users.offset,
     isBtnDisable: state.users.btnDisable,
-    filterUsers: state.users.filterUsers
+    filterUsers: state.users.filter
   };
 };
 

@@ -1,27 +1,25 @@
-import { Field, Form, Formik, FormikValues} from "formik";
+import { Field, Form, Formik } from "formik";
 import React, { FC } from "react";
+import { FilterType } from "./redux/usersReduser";
 
 type PropsType = {
-  //getUsersThunkCreater: (pageSize: number, offset: number, filter: string) => void;
-  getPageChangeThunkCreater: (pageSize: number, page: number, offset: number, filter: string) => void;
+  getPageChangeThunkCreater: (pageSize: number, page: number, offset: number, filter: FilterType) => void;
   pageSize: number
   currentPageData: number
-  filterUsers: string
+  filterUsers: FilterType
 };
-
-type InitType = {
-  filter: string
-}
 
 const UsersFilter: FC<PropsType> = React.memo(({pageSize, currentPageData, getPageChangeThunkCreater}) => {
 
-  const submit = (filter: FormikValues, {setSubmitting}: {setSubmitting: (isSubmitting: boolean) => void}) => {
-    getPageChangeThunkCreater(pageSize, 1, currentPageData, filter.filter)
+  const submit = (filter: FilterType, {setSubmitting}: {setSubmitting: (isSubmitting: boolean) => void}) => {
+    getPageChangeThunkCreater(pageSize, 1, currentPageData, filter)
     setSubmitting(false)
+    console.log(filter);
   };
-
-  const initialValues: InitType = {
-    filter: ''
+//todo: null, true, false response in string
+  const initialValues: FilterType = {
+    users: '',
+    follow: null
   };
 
     return (
@@ -32,8 +30,13 @@ const UsersFilter: FC<PropsType> = React.memo(({pageSize, currentPageData, getPa
         >
           {({isSubmitting, values}) => (
             <Form>
-              <Field name='filter' type='text' value={values.filter}/>
+              <Field name='users' type='text' value={values.users}/>
               <button type='submit' disabled={isSubmitting}>Find</button>
+              <Field  name="follow" as="select" >
+                <option value='null'>All</option>
+                <option value='true'>UnFollow</option>
+                <option value='false'>Follow</option>
+              </Field>
             </Form>
           )}
         </Formik>
