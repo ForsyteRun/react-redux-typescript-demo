@@ -8,7 +8,7 @@ import {Header} from './Header';
 import Dashboard from './Dashboard';
 import Preferenses from './Preferenses';
 import Preloader from './Preloader';
-import MyProfileConteiner from './MyProfileConteiner';
+import {MyProfileConteiner} from './MyProfileConteiner';
 import NoPage from './NoPage';
 import { AppState } from './redux/redux';
 

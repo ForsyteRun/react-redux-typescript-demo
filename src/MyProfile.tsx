@@ -2,31 +2,21 @@ import React, { FC, useEffect, useState } from "react";
 import editLogo from './img/edit.png';
 import photo from './img/smile.jpg';
 import s from './MyProfile.module.css';
-import MyProfileAvaForm from "./MyProfileAvaForm";
-import Preloader from "./Preloader";
-import MyProfileHOCForm from "./MyProfileForm";
 import { ProfileType } from "./types/types";
+import { useSelector } from "react-redux";
+import { AppState } from "./redux/redux";
+import { MyProfileAvaForm } from "./MyProfileAvaForm";
+import { MyProfileDataForm } from "./MyProfileDataForm";
 
-type PropsType = {
-   avatar: string | null
-   isLoading: boolean
-   setImageProfile: (imageUrl: any) => void
-   setProfileData: (imageUrl: ProfileType) => void
-   profileData: ProfileType
-};
+export const MyProfile: FC = React.memo(() => {
 
-const MyProfile: FC<PropsType> = React.memo((props) => {
-
-   const{avatar, isLoading, setImageProfile, profileData, setProfileData}=props
+   const avatar = useSelector((state:AppState) => state.myProfile.avatar)
+   
    const [editLogoForm, setEditLogoForm] = useState<boolean>(false);
 
    useEffect(() => {
       setEditLogoForm(false)
    }, [avatar])
-
-   if (isLoading) {
-      return <Preloader />
-   }
     
    return (
       <div className={s.conteiner}>
@@ -37,14 +27,11 @@ const MyProfile: FC<PropsType> = React.memo((props) => {
             <span className={s.editLogo} onClick={() => setEditLogoForm(!editLogoForm)} >
                <img src={editLogo} alt='noAva'/>
             </span>
-            <MyProfileAvaForm setImageProfile={setImageProfile} editLogoForm={editLogoForm} avatar={avatar}/>
+            <MyProfileAvaForm editLogoForm={editLogoForm}/>
          </div>
          <div className={s.rightBlock}>
-            <MyProfileHOCForm setProfileData={setProfileData} fullName={profileData.fullName}
-            lookinForJobDiiscription={profileData.lookinForJobDiiscription} lookinForJob={profileData.lookinForJob}/> 
+            <MyProfileDataForm /> 
          </div>
       </div>
    )
 });
-
-export default MyProfile;

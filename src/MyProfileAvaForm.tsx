@@ -1,47 +1,61 @@
-import { Field, Form, FormikProps, FormikValues, withFormik } from "formik";
-import React, { FC } from "react";
+import {
+  Field,
+  Form,
+  Formik
+} from "formik";
+import React, { FC, useEffect } from "react";
 import { validateAvatarForm } from "./formik/validateSchema";
 import s from "./MyProfileAvaForm.module.css";
-import cn from 'classnames';
+import cn from "classnames";
+import { AppDispatch } from "./redux/redux";
+import { useDispatch } from "react-redux";
+import { getImageProfile, setImageProfile } from "./redux/myProfileReducer";
 
-type FormValuesType = {
-  setImageProfile: (imageUrl: string) => void;
+type PropsType = {
   editLogoForm: Boolean;
-  avatar: string | null;
 };
 
-const MyProfileAvaForm: FC<FormikProps<FormValuesType> & FormValuesType> =
-  React.memo((props) => {
-    const{editLogoForm, errors} = props
+const initialValue = {
+  avatar: '' as string,
+};
+
+type InitialValue = typeof initialValue;
+
+export const MyProfileAvaForm: FC<PropsType> = React.memo(({ editLogoForm }) => {
+    const dispatch: AppDispatch = useDispatch()
+
+    useEffect(() => {
+      dispatch(getImageProfile()as any); //todo: any
+    }, [dispatch])
     
+    const onSubmit = (values: InitialValue) => {
+      dispatch(setImageProfile(values.avatar) as any); //todo: any
+    }
+
     return (
-      <div>
-        {editLogoForm && (
-          <Form>
-            <Field
-              type="text"
-              name="avatar"
-              placeholder="Enter Url"
-              className={s.block}
-            />      
-            {errors.avatar && <div className={cn(s.error)}>{errors.avatar}</div>}    
-            <button type="submit" >Submit</button>
-          </Form>
-        )}
-      </div>
+      <Formik
+        initialValues={initialValue}
+        onSubmit={(value) => onSubmit(value)}
+        validationSchema={validateAvatarForm}
+        enableReinitialize={true}
+      >
+        {({ errors }) =>
+          editLogoForm && (
+            <Form>
+              <Field
+                type="text"
+                name="avatar"
+                placeholder="Enter Url"
+                className={s.block}
+              />
+              {errors.avatar && (
+                <div className={cn(s.error)}>{errors.avatar}</div>
+              )}
+              <button type="submit">Submit</button>
+            </Form>
+          )
+        }
+      </Formik>
     );
-  });
-
-const MyProfileAva = withFormik<FormValuesType, FormikValues>({
-  mapPropsToValues: (props) => ({
-    editLogoForm: props.editLogoForm,
-    avatar: '',
-  }),
-  validationSchema: validateAvatarForm,
-  handleSubmit: (values: FormikValues, props: any) => {
-    props.props.setImageProfile(values.avatar);
-  },
-  enableReinitialize: true,
-})(MyProfileAvaForm);
-
-export default MyProfileAva;
+  }
+);
