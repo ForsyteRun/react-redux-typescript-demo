@@ -1,16 +1,18 @@
 import React, { FC } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import s from './Header.module.css';
+import { outAuthThunkCreater } from "./redux/authReduser";
+import { AppDispatch, AppState } from "./redux/redux";
+import { getIsAuth } from "./redux/selectors";
 
-type PropsType = {
-  isAuth: boolean
-  outAuthThunkCreater: () => void
-}
+export const Header: FC = React.memo (() => {
 
-const Header: FC<PropsType> = React.memo (({isAuth, outAuthThunkCreater}) => {
+  const isAuth = useSelector((state: AppState) => getIsAuth(state))
+  const dispatch: AppDispatch = useDispatch()
 
   const redirAuth = () => {
-    outAuthThunkCreater();
+    dispatch(outAuthThunkCreater() as any) //todo: any
   };
 
   return (
@@ -22,6 +24,5 @@ const Header: FC<PropsType> = React.memo (({isAuth, outAuthThunkCreater}) => {
       </span>
     </div>
   )
-})
+});
 
-export default Header;

@@ -1,35 +1,38 @@
 import { Field, Form, Formik } from "formik";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import s from "./Auth.module.css";
 import { validateAuth } from "./formik/validateSchema";
 import cn from "classnames";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  enterAuthThunkCreater,
+  getAuthThunkCreater,
+} from "./redux/authReduser";
+import { AppDispatch, AppState } from "./redux/redux";
 
-export type PropsType = {
-  login: string | number | null;
-  email: string | null;
-  rememberMe: boolean;
-  captcha: string | null;
+const initialValues = {
+  email: "" as string | null,
+  login: "" as string | number | null,
+  rememberMe: false,
+  captcha: "" as string | null,
 };
 
-type DispatchType = {
-  isAuth: boolean;
-  enterAuthThunkCreater: (values: PropsType) => void;
-};
+export type FormType = typeof initialValues;
 
-const Auth: FC<PropsType & DispatchType> = React.memo((props) => {
- 
-  if (props.isAuth) return <Navigate to='/myProfile' />; 
- 
-  const initialValues: PropsType = {
-    email: '',
-    login: '',
-    rememberMe: false,
-    captcha: '',
-  };
+const Auth: FC = React.memo(() => {
+  const isAuth = useSelector((state: AppState) => state.auth.isAuth);
 
-  const onSubmit = (values: PropsType) => {
-    props.enterAuthThunkCreater(values);
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAuthThunkCreater() as any); //todo: any
+  }, []);
+
+  if (isAuth) return <Navigate to="/myProfile" />;
+
+  const onSubmit = (values: FormType) => {
+    dispatch(enterAuthThunkCreater(values) as any); //todo: any
   };
 
   return (
@@ -45,9 +48,7 @@ const Auth: FC<PropsType & DispatchType> = React.memo((props) => {
             <Field name="email" placeholder="введите логин" />
             {errors.email && <div className={cn(s.errors)}>{errors.email}</div>}
             <Field name="login" placeholder="введите login" />
-            {errors.login && (
-              <div className={cn(s.errors)}>{errors.login}</div>
-            )}
+            {errors.login && <div className={cn(s.errors)}>{errors.login}</div>}
           </div>
           <div className={s.rememderBox}>
             <Field type="checkbox" name="rememberMe" id="rememberMe" />

@@ -37,4 +37,6 @@ export const store = createStore(rootReduser, enhancer);
 //@ts-ignore
 window._store_ = store;
 
+export type AppDispatch = typeof store.dispatch
+
 

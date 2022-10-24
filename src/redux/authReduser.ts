@@ -1,13 +1,12 @@
-import { Dispatch } from "redux";
 import { authAPI } from '../api/authApi';
 import { securityApi } from '../api/securityApi';
-import { PropsType } from '../Auth';
-import { ActionsType } from '../types/types';
+import { FormType } from '../Auth';
+import { ActionsType, ThunkType } from '../types/types';
 import { ResultCodeEnum } from './../api/api';
 
 const initialState = {
    email: null as string | null,
-   login: null as string | null,
+   login: null as string | number |null,
    id: null as number | null,
    rememberMe: false,
    isLoading: false,
@@ -37,8 +36,7 @@ export const authReduser = (state: InitialState = initialState, action: Actions)
 export default authReduser;
 
 const actions = {
-   authAC: (email: string | null, login: string | null, id: number | null, isAuth: boolean) => {
-      debugger;
+   authAC: (email: string | null, login: string | number |null, id: number | null, isAuth: boolean,) => {
       return {type: 'minin/authReduser/SET_AUTH', email, login, id, isAuth} as const
    },
    getCaptcha: (url: string | null) => {
@@ -46,7 +44,7 @@ const actions = {
    },
 };
 
-export const getAuthThunkCreater = () => async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
+export const getAuthThunkCreater = (): ThunkType<Actions>=> async (dispatch, getState) => {
    try {
       const res = await authAPI.authMe();
       if (res.resultCode === ResultCodeEnum.Success) {
@@ -60,12 +58,11 @@ export const getAuthThunkCreater = () => async (dispatch: Dispatch<Actions>, get
    }
 };
 
-export const enterAuthThunkCreater = (values: PropsType) => 
-async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
+export const enterAuthThunkCreater = (values: FormType): ThunkType<Actions> => 
+async (dispatch, getState) => {
    try {
       let res = await authAPI.enterAuth(values.email, values.login, values.rememberMe, values.captcha);    
       if (res.resultCode === ResultCodeEnum.Success) {
-         //todo: find out how dispatch thunk
          dispatch(actions.authAC(null, null, null, false))
          dispatch(getAuthThunkCreater() as any)
       } else {
@@ -76,8 +73,8 @@ async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
    }
 };
 
-export const outAuthThunkCreater = () => 
-async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
+export const outAuthThunkCreater = (): ThunkType<Actions> => 
+async (dispatch, getState) => {
    debugger;
    try {
       await authAPI.outAuth()
@@ -88,8 +85,8 @@ async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
    }
 };
 
-export const getCaptchaThunk = () => 
-async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
+export const getCaptchaThunk = (): ThunkType<Actions> => 
+async (dispatch, getState) => {
    try {
         const res = await securityApi.getCaptcha();
    dispatch(actions.getCaptcha(res));

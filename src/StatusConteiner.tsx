@@ -2,7 +2,6 @@ import { PureComponent } from "react";
 import { connect } from 'react-redux';
 import { AppState } from "./redux/redux";
 import { getStatusThunkCreater, updateStatusThunkCreater } from './redux/myProfileReducer';
-import Status from "./Status";
 import StatusHooks from "./StatusHooks";
 
 type MSTPType = ReturnType<typeof mapStateToProps>
@@ -21,7 +20,7 @@ class StatusConteiner extends PureComponent<MSTPType&MapDSTPType>{
    const{getStatusThunkCreater, ...restProps} = this.props;
       return (
          <div>
-            <Status {...restProps}/>
+            {/* <Status {...restProps}/> */}
             <StatusHooks {...restProps}/> 
          </div>
       )

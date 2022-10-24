@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { NavLink, Route, Routes } from 'react-router-dom';
 import UsersConteiner from './UsersConteiner';
 import ProfileConteiner from './ProfileConteiner';
-import HeaderConteiner from './HeaderConteiner';
+import {Header} from './Header';
 import Dashboard from './Dashboard';
 import Preferenses from './Preferenses';
 import Preloader from './Preloader';
@@ -12,9 +12,9 @@ import MyProfileConteiner from './MyProfileConteiner';
 import NoPage from './NoPage';
 import { AppState } from './redux/redux';
 
-const MusicConteiner = lazy(() => import('./MusicConteiner'));
-const AuthConteiner = lazy(() => import('./AuthConteiner'));
-const RegisterConteiner = lazy(() => import('./RegisterConteiner'));
+const Music = lazy(() => import('./Music'));
+const Auth = lazy(() => import('./Auth'));
+const Register = lazy(() => import('./Register'));
 
 type MapStateToProps = ReturnType<typeof mapStateToProps>
 
@@ -36,7 +36,7 @@ const App: FC<MapStateToProps> = (props) => {
 
   return (
     <div>
-      <HeaderConteiner />
+      <Header />
       <div className={styles.App}>
         <button onClick={increment}>+</button>
         <button onClick={dicrement}>-</button>
@@ -55,9 +55,9 @@ const App: FC<MapStateToProps> = (props) => {
         <Suspense fallback={<div><Preloader/></div>}>
           <Routes>
             <Route path='*' element={<NoPage/>} />
-            <Route path="/music" element={<MusicConteiner />} />
-            <Route path='/auth' element={<AuthConteiner />} />
-            <Route path='/register' element={<RegisterConteiner />} />
+            <Route path="/music" element={<Music />} />
+            <Route path='/auth' element={<Auth />} />
+            <Route path='/register' element={<Register />} />
             <Route path='/myprofile' element={<MyProfileConteiner />} />
           </Routes>
         </Suspense>

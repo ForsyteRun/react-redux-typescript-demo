@@ -4,6 +4,7 @@ import MyProfile from "./MyProfile";
 import { getAuthThunkCreater } from './redux/authReduser';
 import { getImageProfile, getProfileData, setImageProfile, setProfileData } from './redux/myProfileReducer';
 import { AppState } from "./redux/redux";
+import { Status } from "./Status";
 import StatusConteiner from "./StatusConteiner";
 import { ProfileType } from "./types/types";
 
@@ -26,14 +27,15 @@ class MyProfileConteiner extends PureComponent<MSTPType & DispatchPropsType> {
   componentDidMount(){
       this.props.getImageProfile();
       this.props.getProfileData();
-      //getHeaderThunkCreater();
+      //this.props.getAuthThunkCreater();
     };  
   
   render() {   
     
     return (
       <div>
-        <StatusConteiner  />
+        <Status/>
+        {/* <StatusConteiner  /> */}
         <MyProfile {...this.props}/>
       </div>
     )

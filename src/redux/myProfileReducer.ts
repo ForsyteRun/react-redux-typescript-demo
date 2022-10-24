@@ -60,9 +60,8 @@ export const getStatusThunkCreater =
 export const updateStatusThunkCreater =
   (status: string) => async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
     try {  
-      debugger
-      await meAPI.updateStatus(status);
-      dispatch(actions.updateStatus(status));
+      const res = await meAPI.updateStatus(status);
+      dispatch(actions.updateStatus(res.status));
     } catch (error) {
       throw new Error('Error in updateNewsStatusCreater' + error);
     }
