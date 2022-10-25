@@ -1,38 +1,38 @@
 import React, { FC } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import style from './Users.module.css';
 import avatar from './../src/img/smile.jpg';
+import { AppDispatch, AppState } from "./redux/redux";
+import { getFollowThunkCreater, getUnFollowThunkCreater } from "./redux/usersReduser";
 import { UserData } from "./types/types";
+import s from './Users.module.css';
 
-export type OwnType = {
+export type PropsType = {
   el: UserData
-  isFollowingData: Array<number>
-  isBtnDisable: boolean
-  getFollowThunkCreater: (userId: number) => void
-  getUnFollowThunkCreater: (userId: number) => void
-}
+};
 
-const FollowUnFollow: FC<OwnType> = React.memo((props) => {
-  
+export const FollowUnFollow: FC<PropsType> = React.memo(({el}) => {
+
+  const isFollowingData = useSelector((state: AppState) => state.users.followingProgress)
+  const dispatch: AppDispatch= useDispatch()
+
   return ( 
-        <div className = {style.content}>
+        <div className = {s.content}>
             <div>
-              <NavLink to = {'/profile/' + props.el.id}>
-                <img src={props.el.photo || avatar} alt = 'avatar' className = {style.img}/>
+              <NavLink to = {'/profile/' + el.id}>
+                <img src={el.photo || avatar} alt = 'avatar' className = {s.img}/>
               </NavLink>
-              <span>{props.el.name}</span>
+              <span>{el.name}</span>
             </div>
             <div>
-              {props.el.isFollow 
-              ? <button disabled={props.isFollowingData.some(id => id === props.el.id )} onClick={() => {  
-                props.getUnFollowThunkCreater(props.el.id);  
+              {el.isFollow 
+              ? <button disabled={isFollowingData.some(id => id === el.id )} onClick={() => {  
+                dispatch(getUnFollowThunkCreater(el.id) as any) //todo: any;  
               }}>UnFollow</button>
-              : <button disabled={props.isFollowingData.some(id => id === props.el.id )} onClick={()=>{
-                props.getFollowThunkCreater(props.el.id);    
+              : <button disabled={isFollowingData.some(id => id === el.id )} onClick={()=>{
+                dispatch(getFollowThunkCreater(el.id) as any) //todo: any;    
               }}>Follow</button>}
             </div>
         </div>
         ) 
       });
-
-export default FollowUnFollow;

@@ -2,15 +2,13 @@ import { FC, lazy, Suspense, useState } from 'react';
 import styles from './App.module.css';
 import { connect } from 'react-redux';
 import { NavLink, Route, Routes } from 'react-router-dom';
-import UsersConteiner from './UsersConteiner';
 import ProfileConteiner from './ProfileConteiner';
 import {Header} from './Header';
-import Dashboard from './Dashboard';
-import Preferenses from './Preferenses';
 import Preloader from './Preloader';
 import {MyProfileConteiner} from './MyProfileConteiner';
 import NoPage from './NoPage';
 import { AppState } from './redux/redux';
+import { Users } from './Users';
 
 const Music = lazy(() => import('./Music'));
 const Auth = lazy(() => import('./Auth'));
@@ -46,11 +44,9 @@ const App: FC<MapStateToProps> = (props) => {
         <NavLink to='/music' style={{ margin: '20px' }}>Login</NavLink>
         <NavLink to='/myprofile'>My Profile</NavLink>
         <Routes>
-          <Route path='/' element={<UsersConteiner />} />
-          <Route path='/users' element={<UsersConteiner />} />
+          <Route path='/' element={<Users />} />
+          <Route path='/users' element={<Users />} />
           <Route path='/profile/:id' element={<ProfileConteiner />} />
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/preferenses' element={<Preferenses />} />
         </Routes>
         <Suspense fallback={<div><Preloader/></div>}>
           <Routes>

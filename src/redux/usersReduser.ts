@@ -17,7 +17,7 @@ const initialState = {
   btnDisable: false,
   filter: {
     users: '' as string,
-    follow: false as boolean | null,
+    follow: null as boolean | null
   }
 };
 
@@ -134,7 +134,6 @@ async (dispatch: DispatchType, getState: StateType) => {
 export const getPageChangeThunkCreater =
   (pageSize: number, pageNumber: number, offset: number,  filter?: FilterType) =>
   async (dispatch: DispatchType, getState: StateType) => {
-    debugger
     try {
       dispatch(actions.currentPage(pageNumber));
       dispatch(actions.toggleLoading(true));

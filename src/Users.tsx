@@ -1,34 +1,33 @@
-import { FC } from "react";
-import Pagination, { PaginationType } from "./common/Pagination";
+import React, { FC, useEffect } from "react";
+import {Pagination} from "./common/Pagination";
 import { UserData } from "./types/types";
-import FollowUnFollow from "./FollowUnFollow";
-import UsersFilter from "./UsersFilter";
-import { FilterType } from "./redux/usersReduser";
+import {UsersFilter} from "./UsersFilter";
+import { FollowUnFollow } from "./FollowUnFollow";
+import { AppDispatch, AppState } from "./redux/redux";
+import { useDispatch, useSelector } from "react-redux";
+import Preloader from "./Preloader";
+import { getUsersThunkCreater } from "./redux/usersReduser";
 
-type UserType = {
-  isFollowingData: Array<number>
-  isBtnDisable: boolean
-  getFollowThunkCreater: (userId: number) => void
-  getUnFollowThunkCreater: (userId: number) => void  
-  getPageChangeThunkCreater: (pageSize: number, page: number, offset: number, filter: FilterType) => void;
-};
+export const Users: FC = React.memo((props) => {
 
-type PropsType = {
-  users: Array<UserData>
-  pageSize: number
-  currentPageData: number
-  filterUsers:  FilterType
-  getUsersThunkCreater: (pageSize: number, offset: number, filter: string) => void;
-};
+  useEffect(() => {
+    dispatch(getUsersThunkCreater(pageSize, currentPageData-1) as any) //todo: any
+  }, [])
 
-const Users: FC<UserType&PropsType&PaginationType> = (props) => {
+  const isLoading = useSelector((state: AppState) => state.users.isLoading)
+  const users = useSelector((state: AppState) => state.users.users)
+  const pageSize = useSelector((state: AppState) => state.users.pageSize);
+  const currentPageData = useSelector((state: AppState) => state.users.currentPage);
+  const dispatch: AppDispatch= useDispatch()
+
+  if(isLoading){
+    return  <Preloader />
+  }
 
   return (
     <div>
-      <UsersFilter  {...props}/>
-      {props.users.map((el: UserData) => <FollowUnFollow {...props} el = {el} key={el.id}/>)}
-      <Pagination {...props}/> 
+      <UsersFilter  />
+      {users.map((el: UserData) => <FollowUnFollow el = {el} key={el.id}/>)}
+      <Pagination /> 
     </div>
-)}
-
-export default Users;
+)});

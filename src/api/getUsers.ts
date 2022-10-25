@@ -9,7 +9,6 @@ type Follow = {
 export const usersApi = {
   getUsers: async (pageSize: number = 3, offset: number, term: string = '', friends?: null | boolean) => {
     try {
-      debugger
       const res = await instanceMock.get<Array<UserData>>(
         `post?limit=${pageSize}&offset=${offset}&name_contains=${term}` + (friends === null ? '' : `&isFollow_eq=${friends}`) 
       );

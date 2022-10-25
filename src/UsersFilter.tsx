@@ -1,27 +1,26 @@
 import { Field, Form, Formik } from "formik";
 import React, { FC } from "react";
-import { FilterType } from "./redux/usersReduser";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, AppState } from "./redux/redux";
+import { FilterType, getPageChangeThunkCreater } from "./redux/usersReduser";
 
-type PropsType = {
-  getPageChangeThunkCreater: (pageSize: number, page: number, offset: number, filter: FilterType) => void;
-  pageSize: number
-  currentPageData: number
-  filterUsers: FilterType
+const initialValues: FilterType = {
+  users: '',
+  follow: null,
 };
 
-const UsersFilter: FC<PropsType> = React.memo(({pageSize, currentPageData, getPageChangeThunkCreater}) => {
+export const UsersFilter: FC = React.memo(() => {
+
+  const pageSize = useSelector((state: AppState) => state.users.pageSize)
+  const currentPageData = useSelector((state: AppState) => state.users.currentPage)
+  
+  const dispatch: AppDispatch= useDispatch()
 
   const submit = (filter: FilterType, {setSubmitting}: {setSubmitting: (isSubmitting: boolean) => void}) => {
-    getPageChangeThunkCreater(pageSize, 1, currentPageData, filter)
+    dispatch(getPageChangeThunkCreater(pageSize, 1, currentPageData, filter) as any) //todo: any
     setSubmitting(false)
-    console.log(filter);
-  };
-//todo: null, true, false response in string
-  const initialValues: FilterType = {
-    users: '',
-    follow: null
-  };
-
+  }
+  
     return (
         <Formik
         initialValues={initialValues}
@@ -34,8 +33,8 @@ const UsersFilter: FC<PropsType> = React.memo(({pageSize, currentPageData, getPa
               <button type='submit' disabled={isSubmitting}>Find</button>
               <Field  name="follow" as="select" >
                 <option value='null'>All</option>
-                <option value='true'>UnFollow</option>
-                <option value='false'>Follow</option>
+                <option value='true'>unFollow</option>
+                <option value='false'>follow</option>
               </Field>
             </Form>
           )}
@@ -43,5 +42,4 @@ const UsersFilter: FC<PropsType> = React.memo(({pageSize, currentPageData, getPa
     )
 });
 
-export default UsersFilter;
 

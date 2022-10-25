@@ -9,10 +9,6 @@ export class MyProfileConteiner extends PureComponent {
   //   return null
   //  }
 
-  componentDidMount() {
-    //this.props.getAuthThunkCreater();
-  }
-
   render() {
     return (
       <div>
