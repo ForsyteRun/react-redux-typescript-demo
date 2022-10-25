@@ -1,12 +1,11 @@
 import React, { FC, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import editLogo from './img/edit.png';
 import photo from './img/smile.jpg';
 import s from './MyProfile.module.css';
-import { ProfileType } from "./types/types";
-import { useSelector } from "react-redux";
-import { AppState } from "./redux/redux";
 import { MyProfileAvaForm } from "./MyProfileAvaForm";
 import { MyProfileDataForm } from "./MyProfileDataForm";
+import { AppState } from "./redux/redux";
 
 export const MyProfile: FC = React.memo(() => {
 

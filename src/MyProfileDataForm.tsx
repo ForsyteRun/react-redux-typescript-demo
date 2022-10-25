@@ -22,7 +22,6 @@ export const MyProfileDataForm: FC = React.memo(() => {
    console.log(profileData)
 
    useEffect(() => {
-      debugger
       dispatch(getProfileData() as any) //todo: any
    }, [dispatch])
    

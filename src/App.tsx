@@ -1,31 +1,31 @@
-import { FC, lazy, Suspense, useState } from 'react';
-import styles from './App.module.css';
-import { connect } from 'react-redux';
-import { NavLink, Route, Routes } from 'react-router-dom';
-import ProfileConteiner from './ProfileConteiner';
-import {Header} from './Header';
-import Preloader from './Preloader';
-import {MyProfileConteiner} from './MyProfileConteiner';
-import NoPage from './NoPage';
-import { AppState } from './redux/redux';
-import { Users } from './Users';
+import { FC, lazy, Suspense, useState } from "react";
+import styles from "./App.module.css";
+import { connect } from "react-redux";
+import { Link, NavLink, Route, Routes } from "react-router-dom";
+import ProfileConteiner from "./ProfileConteiner";
+import { Header } from "./Header";
+import Preloader from "./Preloader";
+import { MyProfileConteiner } from "./MyProfileConteiner";
+import NoPage from "./NoPage";
+import { AppState } from "./redux/redux";
+import { Users } from "./Users";
+import { Layout } from "./Layout";
 
-const Music = lazy(() => import('./Music'));
-const Auth = lazy(() => import('./Auth'));
-const Register = lazy(() => import('./Register'));
+const Music = lazy(() => import("./Music"));
+const Auth = lazy(() => import("./Auth"));
+const Register = lazy(() => import("./Register"));
 
-type MapStateToProps = ReturnType<typeof mapStateToProps>
+type MapStateToProps = ReturnType<typeof mapStateToProps>;
 
 const App: FC<MapStateToProps> = (props) => {
-
   const [num, setNum] = useState(0);
 
   const increment = () => {
-    setNum(num + 1)
+    setNum(num + 1);
   };
 
   const dicrement = () => {
-    setNum(num - 1)
+    setNum(num - 1);
   };
 
   // if (!props.isInitial) {
@@ -39,33 +39,48 @@ const App: FC<MapStateToProps> = (props) => {
         <button onClick={increment}>+</button>
         <button onClick={dicrement}>-</button>
         <div>Результат:{num}</div>
-        <NavLink to='/users' style={{ margin: '20px' }}>Users</NavLink>
-        <NavLink to='/register' style={{ margin: '20px' }}>Music</NavLink>
-        <NavLink to='/music' style={{ margin: '20px' }}>Login</NavLink>
-        <NavLink to='/myprofile'>My Profile</NavLink>
+        <NavLink to="/users" style={{ margin: "20px" }}>
+          Users
+        </NavLink>
+        <NavLink to="/register" style={{ margin: "20px" }}>
+          Music
+        </NavLink>
+        <NavLink to="/music" style={{ margin: "20px" }}>
+          Login
+        </NavLink>
+        <NavLink to="/myprofile">My Profile</NavLink>
         <Routes>
-          <Route path='/' element={<Users />} />
-          <Route path='/users' element={<Users />} />
-          <Route path='/profile/:id' element={<ProfileConteiner />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/profile/:id" element={<ProfileConteiner />} />
         </Routes>
-        <Suspense fallback={<div><Preloader/></div>}>
+        <Suspense
+          fallback={
+            <div>
+              <Preloader />
+            </div>
+          }
+        >
           <Routes>
-            <Route path='*' element={<NoPage/>} />
+            <Route path="/" element = {<Layout/>}>
+              <Route path="posts" element={<MyProfileConteiner />} />
+              <Route path="about" element={<NoPage />} />
+            </Route>
+            <Route path="*" element={<NoPage />} />
             <Route path="/music" element={<Music />} />
-            <Route path='/auth' element={<Auth />} />
-            <Route path='/register' element={<Register />} />
-            <Route path='/myprofile' element={<MyProfileConteiner />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/myprofile" element={<MyProfileConteiner />} />
           </Routes>
         </Suspense>
       </div>
     </div>
   );
-}
+};
 
 const mapStateToProps = (state: AppState) => {
   return {
-    isInitial: state.init.isInitial
-  }
+    isInitial: state.init.isInitial,
+  };
 };
 
-export default connect<MapStateToProps, {}, {}, AppState>(mapStateToProps)(App)
+export default connect<MapStateToProps, {}, {}, AppState>(mapStateToProps)(App);

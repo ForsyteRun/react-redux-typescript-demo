@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { compose } from "redux";
-import Profile from "./Profile";
+import {Profile} from "./Profile";
 import { AppState } from "./redux/redux";
 import { getUserProfileThunkCreater } from './redux/usersReduser';
 
@@ -15,9 +15,12 @@ class ProfileConteiner extends Component<MSTPT&MapDTP>{
   
   componentDidMount(){
     //@ts-ignore
-    let match: number = this.props.router.params.id;
-    this.props.getUserProfileThunkCreater(match);
+    // let match: number = this.props.router.params.id;
+    // this.props.getUserProfileThunkCreater(match);
+
   }
+
+  
 
   render(){
     return (
@@ -34,18 +37,19 @@ const mapStateToProps = (state: AppState) => {
   }
 }
  
-const withRouter = (WrappedComponent: React.ComponentType) => (props: any) => {
-  let params = useParams();
-  let location = useLocation();
+// const withRouter = (WrappedComponent: React.ComponentType) => (props: any) => {
+//   let params = useParams();
+//   let location = useLocation();
 
-  return (
-    <WrappedComponent
-    {...props}
-    router = {{location, params}}   
-    />
-  )
-}
+//   console.log(params)
+//   console.log(location)
+//   return (
+//     <WrappedComponent
+//     {...props}
+//     router = {{location, params}}   
+//     />
+//   )
+// }
 
 export default compose <React.ComponentType>(
-  connect(mapStateToProps, {getUserProfileThunkCreater}),
-  withRouter)(ProfileConteiner)
+  connect(mapStateToProps, {getUserProfileThunkCreater}))(ProfileConteiner)

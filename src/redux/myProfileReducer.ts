@@ -89,7 +89,6 @@ export const getImageProfile = () => async (dispatch: Dispatch<Actions>, getStat
 
 export const getProfileData = () => async (dispatch: Dispatch<Actions>, getState: () => InitialState) => {
    try {
-   debugger
       const res = await meAPI.getProfileInfo()
       dispatch(actions.setDataProfile(res))
       }
