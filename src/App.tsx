@@ -1,15 +1,19 @@
 import { FC, lazy, Suspense, useState } from "react";
-import styles from "./App.module.css";
 import { connect } from "react-redux";
-import { Link, NavLink, Route, Routes } from "react-router-dom";
-import ProfileConteiner from "./ProfileConteiner";
+import { Navigate, NavLink, Route, Routes } from "react-router-dom";
+import styles from "./App.module.css";
 import { Header } from "./Header";
-import Preloader from "./Preloader";
+import { RequireAuth } from "./hoc/RequireAuth";
+import { Layout } from "./Layout";
 import { MyProfileConteiner } from "./MyProfileConteiner";
 import NoPage from "./NoPage";
+import { PostEdit } from "./PostEdit";
+import { Posts } from "./Posts";
+import { PostsSingle } from "./PostSingle";
+import Preloader from "./Preloader";
+import ProfileConteiner from "./ProfileConteiner";
 import { AppState } from "./redux/redux";
 import { Users } from "./Users";
-import { Layout } from "./Layout";
 
 const Music = lazy(() => import("./Music"));
 const Auth = lazy(() => import("./Auth"));
@@ -62,14 +66,21 @@ const App: FC<MapStateToProps> = (props) => {
         >
           <Routes>
             <Route path="/" element = {<Layout/>}>
-              <Route path="posts" element={<MyProfileConteiner />} />
+              <Route path="posts" element={<Posts />} />
+              <Route path="posts/:id" element={<PostsSingle />} />
               <Route path="about" element={<NoPage />} />
+              <Route path="about-us" element={<Navigate to ='/about' replace />} />
+              <Route path="articles" element={<Posts />} />
+              <Route path= 'posts/:id/edit' element={<PostEdit />} />
+              <Route path="/myprofile" element={
+              <RequireAuth>
+                 <MyProfileConteiner />  
+              </RequireAuth>} />             
             </Route>
             <Route path="*" element={<NoPage />} />
             <Route path="/music" element={<Music />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/myprofile" element={<MyProfileConteiner />} />
           </Routes>
         </Suspense>
       </div>

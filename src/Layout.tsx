@@ -1,16 +1,34 @@
-import { NavLink, Outlet } from "react-router-dom";
-import s from './Layout.module.css'
-import cn from 'classnames';
+import { Link, Outlet, useMatch} from "react-router-dom";
+import cn from 'classnames'
+import s from './Layout .module.css'
+
 
 export const Layout = () => {
   return (
     <>
       <header>
-        <NavLink to="/posts" >Blog</NavLink>
-        <NavLink to="/about" className={({isActive}) => isActive ? 'activeLink' : ''} >About</NavLink>
+        <CustomLink to="/posts" >Blog</CustomLink>
+        <CustomLink to="/about" >About</CustomLink>
+        <CustomLink to="/articles" >Articles</CustomLink>
       </header>
+      <main className={s.conteiner}>
       <Outlet />
+      </main>
       <footer>2022</footer>
     </>
   );
 };
+const CustomLink = ({children, to}: any) => {
+  const match = useMatch(to)
+  
+  return (
+    <Link 
+    to = {to}
+    style = {{
+      color: match ? 'red' : 'black', fontWeight: '600'
+    }}
+    >{children}</Link>  
+  )
+};
+
+
