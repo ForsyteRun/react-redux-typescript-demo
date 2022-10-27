@@ -1,6 +1,6 @@
 import { Field, Form, Formik } from "formik";
 import React, { FC, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import s from "./Auth.module.css";
 import { validateAuth } from "./formik/validateSchema";
 import cn from "classnames";
@@ -22,7 +22,8 @@ export type FormType = typeof initialValues;
 
 const Auth: FC = React.memo(() => {
   const isAuth = useSelector((state: AppState) => state.auth.isAuth);
-
+  const location = useLocation()
+ 
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
@@ -36,6 +37,8 @@ const Auth: FC = React.memo(() => {
   };
 
   return (
+    <>
+    <div>You comme from {location.state.from?.pathname || '/'}. Please auth</div>
     <Formik
       initialValues={initialValues}
       onSubmit={(values) => onSubmit(values)}
@@ -64,6 +67,7 @@ const Auth: FC = React.memo(() => {
         </Form>
       )}
     </Formik>
+    </>
   );
 });
 

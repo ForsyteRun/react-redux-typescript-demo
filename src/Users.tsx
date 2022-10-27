@@ -7,7 +7,7 @@ import { AppDispatch, AppState } from "./redux/redux";
 import { useDispatch, useSelector } from "react-redux";
 import Preloader from "./Preloader";
 import { getUsersThunkCreater } from "./redux/usersReduser";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useSearchParams } from "react-router-dom";
 
 export const Users: FC = React.memo(() => {
 
@@ -19,19 +19,17 @@ export const Users: FC = React.memo(() => {
   const users = useSelector((state: AppState) => state.users.users)
   const pageSize = useSelector((state: AppState) => state.users.pageSize)
   const currentPageData = useSelector((state: AppState) => state.users.currentPage)
-  const filter = useSelector((state: AppState) => state.users.filter)
+  const last5 = useSelector((state: AppState) => state.users.filter.last5)
 
   const dispatch: AppDispatch= useDispatch()
-  let location = useParams()
-
-  console.log(location);
-  
-  useEffect(() => {
-    
-      }, [filter])
 
   if(isLoading){
     return  <Preloader />
+  }
+
+  if(last5){
+   const res = users.slice(users.length-5, users.length-1)
+   console.log(res);
   }
 
   return (

@@ -17,7 +17,8 @@ const initialState = {
   btnDisable: false,
   filter: {
     users: '' as string,
-    follow: null as boolean | null
+    follow: null as boolean | null,
+    last5: false
   }
 };
 

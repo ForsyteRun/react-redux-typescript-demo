@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useLocation, useNavigate, useNavigation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useNavigation, useParams, useSearchParams } from "react-router-dom";
 import Preloader from "./Preloader";
 import { AppState } from "./redux/redux";
 import { UserData } from "./types/types";
@@ -15,7 +15,7 @@ export const Profile: FC<PropsType> = React.memo(() => {
   const filter = useSelector((state: AppState) => state.users.filter)
   const navigate = useNavigate()
   const location = useLocation()
-   
+  
   const goBack = () => {
     navigate(-1)
   };
@@ -23,11 +23,6 @@ export const Profile: FC<PropsType> = React.memo(() => {
   const goHome = () => {
     navigate('/', {replace: true})
   };
-
-
-  useEffect(() => {
-    location.search = `${filter.users}&${filter.follow}`
-  },[])
 
   if (!userProfile){
     return <Preloader/>

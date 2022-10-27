@@ -10,6 +10,7 @@ import {
 } from "redux";
 import thunk from "redux-thunk";
 import { myProfileReducer } from "./myProfileReducer";
+import { postsReduser } from "./postsReduser";
 
 const rootReduser = combineReducers({
   profile: profileReduser,
@@ -17,6 +18,7 @@ const rootReduser = combineReducers({
   init: initialReducer,
   auth: authReduser,
   myProfile: myProfileReducer,
+  posts: postsReduser,
 });
 
 
