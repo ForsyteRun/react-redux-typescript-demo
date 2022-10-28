@@ -1,40 +1,43 @@
 import { Field, Form, Formik } from "formik";
-import React, { FC } from "react";
+import QueryString from "qs";
+import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
-import { boolean } from "yup/lib/locale";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { AppDispatch, AppState } from "./redux/redux";
 import { FilterType, getPageChangeThunkCreater } from "./redux/usersReduser";
 
-const initialValues: FilterType = {
-  users: '',
-  follow: null,
-  last5: false
-};
-
 export const UsersFilter: FC = React.memo(() => {
-
+  
   const pageSize = useSelector((state: AppState) => state.users.pageSize)
   const currentPageData = useSelector((state: AppState) => state.users.currentPage)
   
   const dispatch: AppDispatch= useDispatch()
 
-  const [searchUsers, setSearchUsers] = useSearchParams()
-  const [searchFollow, setSearchFollow] = useSearchParams()
+  const [search, setSearch] = useSearchParams() as any
+  const location = useLocation()
+ 
+  const postQuary = search.get('users') || ''
   
-  // const usersUrl = searchUsers.get('users')
-  // const followUrl = searchFollow.get('follow')
-
-
-  const submit = (filter: FilterType, {setSubmitting}: {setSubmitting: (isSubmitting: boolean) => void}) => {
+  const submit = (filter: FilterType) => {
+    setSearch({users: filter.users})
     dispatch(getPageChangeThunkCreater(pageSize, 1, currentPageData, filter) as any) //todo: any
-    setSubmitting(false)
-    setSearchFollow({follow: filter.follow} as any)
-    setSearchUsers({users: filter.users})
-    console.log(filter);
-    
   }
+
+  useEffect(() => {
+    const usersParams = QueryString.parse(location.search.substring(1));
+    const params: any = {}
+    if(!!usersParams.users) params.users = usersParams.users
+    dispatch(getPageChangeThunkCreater(pageSize, 1, currentPageData, params) as any) //todo: any
+  }, [])
+
   
+  
+  const initialValues: FilterType = {
+    users: postQuary,
+    follow: null,
+    last5: false
+  };
+
     return (
         <Formik
         initialValues={initialValues}

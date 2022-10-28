@@ -7,10 +7,10 @@ type Follow = {
 };
 
 export const usersApi = {
-  getUsers: async (pageSize: number = 3, offset: number, term: string = '', friends?: null | boolean) => {
+  getUsers: async (pageSize: number = 3, offset: number, searchUsers?: string, follow?: null | boolean) => {
     try {
       const res = await instanceMock.get<Array<UserData>>(
-        `post?limit=${pageSize}&offset=${offset}&name_contains=${term}` + (friends === null ? '' : `&isFollow_eq=${friends}`) 
+        `post?limit=${pageSize}&offset=${offset}&name_contains=${searchUsers}` + (follow === null ? '' : `&isFollow_eq=${follow}`) 
       );
       return res.data;
     } catch (error) {

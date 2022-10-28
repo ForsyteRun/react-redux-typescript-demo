@@ -19,11 +19,17 @@ const initialState = {
     users: '' as string,
     follow: null as boolean | null,
     last5: false
-  }
+  } as FilterType
 };
 
+export type FilterType = {
+  users?:  string
+  follow?: boolean | null
+  last5?: false
+}
+
 type InitialState = typeof initialState;
-export type FilterType = typeof initialState.filter;
+//export type FilterType = typeof initialState.filter;
 type Actions = ActionsType<typeof actions>
 
 //reduser - logic of statusPage
@@ -109,11 +115,14 @@ type DispatchType = Dispatch<Actions>;
 type StateType = () => InitialState;
 
 export const getUsersThunkCreater =
-  (pageSize: number, offset: number) =>
+  (pageSize: number, offset: number, filter: FilterType) =>
   async (dispatch: DispatchType, getState: StateType) => {
     try {
       dispatch(actions.toggleLoading(false));
-      const users = await usersApi.getUsers(pageSize, offset);
+      const users = await usersApi.getUsers(pageSize, offset, filter.users, filter.follow)
+      if(filter.users !== '')  {
+        dispatch(actions.filterUsers(filter))
+     }
       dispatch(actions.setUsers(users));
       //dispatch(actions.totalPages(users.));
       dispatch(actions.toggleLoading(false));
@@ -133,12 +142,12 @@ async (dispatch: DispatchType, getState: StateType) => {
 }
 
 export const getPageChangeThunkCreater =
-  (pageSize: number, pageNumber: number, offset: number,  filter?: FilterType) =>
+  (pageSize: number, pageNumber: number, offset: number,  filter: FilterType) =>
   async (dispatch: DispatchType, getState: StateType) => {
     try {
       dispatch(actions.currentPage(pageNumber));
       dispatch(actions.toggleLoading(true));
-      let res = await usersApi.getUsers(pageSize, offset, filter?.users, filter?.follow);
+      let res = await usersApi.getUsers(pageSize, offset, filter.users, filter.follow);
       if(filter)  {
         dispatch(actions.filterUsers(filter))
      }

@@ -1,6 +1,7 @@
 import { FC, lazy, Suspense, useState } from "react";
 import { connect } from "react-redux";
 import { Navigate, NavLink, Route, Routes } from "react-router-dom";
+import About from "./About";
 import styles from "./App.module.css";
 import { Header } from "./Header";
 import { RequireAuth } from "./hoc/RequireAuth";
@@ -68,7 +69,7 @@ const App: FC<MapStateToProps> = (props) => {
             <Route path="/" element = {<Layout/>}>
               <Route path="posts" element={<Posts />} />
               <Route path="posts/:id" element={<PostsSingle />} />
-              <Route path="about" element={<NoPage />} />
+              <Route path="about/*" element={<About/>} />
               <Route path="about-us" element={<Navigate to ='/about' replace />} />
               <Route path="articles" element={<Posts />} />
               <Route path= 'posts/:id/edit' element={<PostEdit />} />
