@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Field, Form, Formik } from "formik";
 import React, { FC, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import s from "./Git.module.css";
 
 const initialValues = {
@@ -24,6 +25,7 @@ const Git: FC = React.memo(() => {
   const [nameColor, setNameColor] = useState<string | null>(null);
   const [users, setUsers] = useState<Array<UserType>>([])
   const [quaryParam, setQuaryParam] = useState<string>('')
+  const [userData, setUserData] = useState<UserType | null>(null)
 
   const fetchData = (search: string) => {
     axios
@@ -37,19 +39,26 @@ const Git: FC = React.memo(() => {
   }, [nameColor]);
 
   useEffect(() => {
+    if(!!nameColor){
+      axios
+      .get<UserType>(`https://api.github.com/users/${nameColor}`)
+      .then((res) => setUserData(res.data))
+      .catch((res) => console.log("Error"));
+    }
+  }, [nameColor])
+
+  useEffect(() => {
     fetchData('forsyte')
   }, []);
 
   useEffect(() => {
+    if(!!quaryParam){
     fetchData(quaryParam)
     document.title = quaryParam
+    }
   }, [quaryParam]);
 
   const onsubmit = (values: InitialValues) => {
-    // if(values.search) {
-    //   fetchData(values.search)
-    //   document.title = values.search
-    // }
     if(values.search) setQuaryParam(values.search)
   };
 
@@ -80,10 +89,18 @@ const Git: FC = React.memo(() => {
               setNameColor(el.login);
               }}
             >
-              {el.login}
+            {el.login}
             </li>
           ))}
         </ul>
+      </div>
+      <div>
+          {userData && <div>
+            {userData.login}
+            <div>
+               <img src={userData.avatar_url} alt='logo'/>
+            </div>
+            </div>}
       </div>
     </>
   );
