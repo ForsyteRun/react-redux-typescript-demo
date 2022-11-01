@@ -1,5 +1,5 @@
 import { FC, lazy, Suspense, useState } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { Navigate, NavLink, Route, Routes } from "react-router-dom";
 import About from "./About";
 import styles from "./App.module.css";
@@ -18,20 +18,37 @@ import { Users } from "./Users";
 
 const Music = lazy(() => import("./Music"));
 const Auth = lazy(() => import("./Auth"));
-const Register = lazy(() => import("./Register"));
+const Git = lazy(() => import("./Git"));
 
-type MapStateToProps = ReturnType<typeof mapStateToProps>;
+export const App: FC = () => {
 
-const App: FC<MapStateToProps> = (props) => {
-  const [num, setNum] = useState(0);
+  const isInitial = useSelector((state: AppState) => state.init.isInitial)
+  
+  const [num3, setNum3] = useState<any>({
+    c1: 0,
+    c2: 0
+  });
 
   const increment = () => {
-    setNum(num + 1);
+    setNum3((a: any) => {
+      return {...a, c1: a.c1 + 1}
+    });
   };
 
   const dicrement = () => {
-    setNum(num - 1);
+    setNum3((a: any) => {
+      return {...a, c2: a.c2 - 1}
+    });
   };
+
+  const sumNum = () => {
+    setNum3((a: any) => {
+      return {...a, 
+        c1: a.c1 + 1,
+        c2: a.c2 - 1
+      }
+    })
+  }
 
   // if (!props.isInitial) {
   //   return <Preloader/>;
@@ -43,12 +60,14 @@ const App: FC<MapStateToProps> = (props) => {
       <div className={styles.App}>
         <button onClick={increment}>+</button>
         <button onClick={dicrement}>-</button>
-        <div>Результат:{num}</div>
+        <button onClick={sumNum}>all</button>
+        <div>Результат:{num3.c1}</div>
+        <div>Результат:{num3.c2}</div>
         <NavLink to="/users" style={{ margin: "20px" }}>
           Users
         </NavLink>
-        <NavLink to="/register" style={{ margin: "20px" }}>
-          Music
+        <NavLink to="/git" style={{ margin: "20px" }}>
+          Git
         </NavLink>
         <NavLink to="/music" style={{ margin: "20px" }}>
           Login
@@ -81,18 +100,10 @@ const App: FC<MapStateToProps> = (props) => {
             <Route path="*" element={<NoPage />} />
             <Route path="/music" element={<Music />} />
             <Route path="/auth" element={<Auth />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/git" element={<Git />} />
           </Routes>
         </Suspense>
       </div>
     </div>
   );
 };
-
-const mapStateToProps = (state: AppState) => {
-  return {
-    isInitial: state.init.isInitial,
-  };
-};
-
-export default connect<MapStateToProps, {}, {}, AppState>(mapStateToProps)(App);

@@ -38,7 +38,7 @@ const Auth: FC = React.memo(() => {
 
   return (
     <>
-    <div>You comme from {location.state.from?.pathname || '/'}. Please auth</div>
+    { location.state && <div>You comme from {location.state.from?.pathname || '/'}. Please auth</div>}
     <Formik
       initialValues={initialValues}
       onSubmit={(values) => onSubmit(values)}

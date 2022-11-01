@@ -7,6 +7,7 @@ import { AppDispatch, AppState } from "./redux/redux";
 import { FilterType, getPageChangeThunkCreater } from "./redux/usersReduser";
 
 export const UsersFilter: FC = React.memo(() => {
+  console.log('filter');
   
   const pageSize = useSelector((state: AppState) => state.users.pageSize)
   const currentPageData = useSelector((state: AppState) => state.users.currentPage)
@@ -24,11 +25,13 @@ export const UsersFilter: FC = React.memo(() => {
   }
 
   useEffect(() => {
+    console.log('location render');
+    
     const usersParams = QueryString.parse(location.search.substring(1));
     const params: any = {}
     if(!!usersParams.users) params.users = usersParams.users
     dispatch(getPageChangeThunkCreater(pageSize, 1, currentPageData, params) as any) //todo: any
-  }, [])
+  }, [location.search])
 
   
   

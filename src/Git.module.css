@@ -19,3 +19,11 @@
       outline-offset: 0;
       border: 1px solid red; 
   } */
+
+.selected{
+   background-color: #999;
+  }
+
+.listConteiner {
+   max-width: 150px;
+}
