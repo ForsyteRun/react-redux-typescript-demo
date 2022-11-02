@@ -8,23 +8,32 @@ type PropsType = {
 };
 
 export const GitUserData: FC<PropsType> = React.memo(({nameColor}) => {
-  console.log('Data');
+
   const [userData, setUserData] = useState<UserType | null>(null)
+  const [second, setSecond] = useState<number>(10)
 
   useEffect(() => {
     if(!!nameColor){
       axios
       .get<UserType>(`https://api.github.com/users/${nameColor}`)
-      .then((res) => setUserData(res.data))
+      .then((res) => {
+       setUserData(res.data) 
+       setSecond(10)
+      })
       .catch((res) => console.log("Error"));
     }
   }, [nameColor])
+
+  useEffect(() => {
+    if(second < 1)
+    setUserData(null)
+  }, [second])
 
   return (
     <>
       <div>
           {userData && <div>
-            <Timer/>
+            <Timer second={second} onChange={setSecond} timerKey={userData.id.toString()}/>
             <br/>
             {userData.login}
             <div>
