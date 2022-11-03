@@ -1,4 +1,4 @@
-import { FC, lazy, Suspense, useState } from "react";
+import { FC, lazy, Suspense, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, NavLink, Route, Routes } from "react-router-dom";
 import About from "./About";
@@ -15,10 +15,15 @@ import { AppState } from "./redux/redux";
 import { Users } from "./Users";
 import "antd/dist/antd.css";
 import { Avatar, Breadcrumb, Layout, Menu } from "antd";
-import { Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-const { Header, Content, Footer } = Layout;
+import { Shop } from "./Shop";
+import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
+import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
+import MoreIcon from '@mui/icons-material/MoreVert';
+import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 
+const { Header, Content, Footer } = Layout;
 const Music = lazy(() => import("./Music"));
 const Auth = lazy(() => import("./Auth"));
 const Git = lazy(() => import("./Git"));
@@ -26,28 +31,33 @@ const Git = lazy(() => import("./Git"));
 export const App: FC = () => {
   const isInitial = useSelector((state: AppState) => state.init.isInitial);
 
-  const [num3, setNum3] = useState<any>({
-    c1: 0,
-    c2: 0,
-  });
+  // useEffect(() => {
+  //   //@ts-ignore
+  //   const database = getDatabase(App);
+  //   console.log(database)
+  // }, [])
+  // const [num3, setNum3] = useState<any>({
+  //   c1: 0,
+  //   c2: 0,
+  // });
 
-  const increment = () => {
-    setNum3((a: any) => {
-      return { ...a, c1: a.c1 + 1 };
-    });
-  };
+  // const increment = () => {
+  //   setNum3((a: any) => {
+  //     return { ...a, c1: a.c1 + 1 };
+  //   });
+  // };
 
-  const dicrement = () => {
-    setNum3((a: any) => {
-      return { ...a, c2: a.c2 - 1 };
-    });
-  };
+  // const dicrement = () => {
+  //   setNum3((a: any) => {
+  //     return { ...a, c2: a.c2 - 1 };
+  //   });
+  // };
 
-  const sumNum = () => {
-    setNum3((a: any) => {
-      return { ...a, c1: a.c1 + 1, c2: a.c2 - 1 };
-    });
-  };
+  // const sumNum = () => {
+  //   setNum3((a: any) => {
+  //     return { ...a, c1: a.c1 + 1, c2: a.c2 - 1 };
+  //   });
+  // };
 
   // if (!props.isInitial) {
   //   return <Preloader/>;
@@ -78,6 +88,11 @@ export const App: FC = () => {
                 My Profile
               </NavLink>
             </Menu.Item>
+            <Menu.Item>
+              <NavLink to="/shop" style={{ margin: "20px" }}>
+                Shop
+              </NavLink>
+            </Menu.Item>
           </Menu>
           <Avatar style={{backgroundColor: "#9999"}} icon={<UserOutlined />}/>
         </Header>
@@ -90,11 +105,11 @@ export const App: FC = () => {
           </Breadcrumb>
           <div className="site-layout-content">
             <div className={styles.App}>
-              <Button onClick={increment}>+</Button>
+              {/* <Button onClick={increment}>+</Button>
               <Button onClick={dicrement}>-</Button>
               <Button onClick={sumNum}>all</Button>
               <div>Результат:{num3.c1}</div>
-              <div>Результат:{num3.c2}</div>
+              <div>Результат:{num3.c2}</div> */}
               <Routes>
                 <Route path="/users" element={<Users />} />
                 <Route path="/profile/:id" element={<ProfileConteiner />} />
@@ -127,12 +142,28 @@ export const App: FC = () => {
                   <Route path="/music" element={<Music />} />
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/git" element={<Git />} />
+                  <Route path="/shop" element={<Shop />} />
                 </Routes>
               </Suspense>
             </div>
           </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>Footer</Footer>
+        <Footer style={{ textAlign: "center" }}>
+        <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0}}>
+        <Toolbar>
+          <IconButton color="inherit" aria-label="open drawer">
+            <MenuIcon />
+          </IconButton>
+          <Box sx={{ flexGrow: 1 }} />
+          <IconButton color="inherit">
+            <SearchIcon />
+          </IconButton>
+          <IconButton color="inherit">
+            <MoreIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+        </Footer>
       </Layout>
     </div>
   );
