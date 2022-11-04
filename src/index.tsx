@@ -7,6 +7,7 @@ import './index.css';
 import { store } from './redux/redux';
 import reportWebVitals from './reportWebVitals';
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+import { getDatabase, ref, onValue} from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCzHvmNhwDNOXGI_lL7pI3gZ6uerIp59Kc",
@@ -19,8 +20,13 @@ const firebaseConfig = {
 };
 
 export const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-console.log(db)
+// const db = getFirestore(app);
+// console.log(db)
+export const dbData = getDatabase();
+
+
+
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

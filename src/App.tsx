@@ -1,4 +1,4 @@
-import { FC, lazy, Suspense, useEffect, useState } from "react";
+import { FC, lazy, Suspense } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, NavLink, Route, Routes } from "react-router-dom";
 import About from "./About";
@@ -21,7 +21,6 @@ import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 
 const { Header, Content, Footer } = Layout;
 const Music = lazy(() => import("./Music"));
